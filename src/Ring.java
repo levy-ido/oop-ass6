@@ -61,4 +61,12 @@ public class Ring implements Sprite {
     @Override
     public void addToGame(GameLevel g) {
     }
+
+    /**
+     * Returns this ring's color.
+     * @return A Color object representing this ring's color
+     */
+    public Color getColor() {
+        return this.color;
+    }
 }

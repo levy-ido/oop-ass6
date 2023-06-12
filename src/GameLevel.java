@@ -68,7 +68,7 @@ public class GameLevel implements Animation {
     private void createBalls() {
         List<Velocity> velocities = this.levelInformation.initialBallVelocities();
         for (int i = 0; i < this.levelInformation.numberOfBalls(); ++i) {
-            Ball b = new Ball(30.0 + 40.0 * i, 300.0 - 10.0 * i, 10, Color.WHITE);
+            Ball b = new Ball((WIDTH / 2.0), ((2.0 / 3.0) * HEIGHT), 10, Color.WHITE);
             b.setVelocity(velocities.get(i));
             b.setGameEnvironment(this.environment);
             b.addToGame(this);
@@ -96,13 +96,13 @@ public class GameLevel implements Animation {
         infoBar.add(new Block(BOUND_WIDTH, 0.0, WIDTH - 2 * BOUND_WIDTH, BOUND_WIDTH, Color.GRAY));
         int x = (int) (WIDTH / 4.0);
         int y = (int) ((BOUND_WIDTH / 5.0) * 4.0);
-        Text nameText = new Text("Level name: " + this.levelInformation.levelName(), Color.WHITE, x, y, 20);
-        infoBar.add(nameText);
-        x = 3 * x;
         Text scoreText = new Text(null, Color.WHITE, x, y, 20);
         ScoreIndicator scoreIndicator = new ScoreIndicator(this.scoreCounter, scoreText);
         scoreIndicator.addToGame(this);
         infoBar.add(scoreIndicator);
+        x = 2 * x;
+        Text nameText = new Text("Level Name: " + this.levelInformation.levelName(), Color.WHITE, x, y, 20);
+        infoBar.add(nameText);
         this.addSprite(infoBar);
     }
 

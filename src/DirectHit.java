@@ -41,7 +41,7 @@ public class DirectHit implements LevelInformation {
         ComplexSprite background = new ComplexSprite();
         double width = GameLevel.WIDTH - 2 * GameLevel.BOUND_WIDTH;
         double height = GameLevel.HEIGHT - 2 * GameLevel.BOUND_WIDTH;
-        background.add(new Background(20.0, 20.0, width, height, Color.BLACK));
+        background.add(new Background(GameLevel.BOUND_WIDTH, GameLevel.BOUND_WIDTH, width, height, Color.BLACK));
         int centerX = (int) (X + SIDE_LEN / 2);
         int centerY = (int) (Y + SIDE_LEN / 2);
         for (int i = 0; i < 3; ++i) {
