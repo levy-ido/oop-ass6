@@ -1,0 +1,23 @@
+/**
+ * Removes balls from the game and counts remaining balls.
+ */
+public class BallRemover extends Remover {
+
+    /**
+     * Constructs a new BallRemover.
+     * @param gameLevel A Game object
+     * @param removedBalls A Counter object representing the number of balls removed
+     */
+    public BallRemover(GameLevel gameLevel, Counter removedBalls) {
+        super(gameLevel, removedBalls);
+    }
+    @Override
+    public void hitEvent(Block beingHit, Ball hitter) {
+        Rectangle beingHitOutline = beingHit.getCollisionRectangle();
+        Rectangle bottomBorderOutline = new Rectangle(20.0, 580.0, 760.0, 20.0);
+        if (beingHitOutline.equals(bottomBorderOutline)) {
+            hitter.removeFromGame(super.getGame());
+            super.getCounter().increase(1);
+        }
+    }
+}
