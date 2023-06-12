@@ -1,25 +1,27 @@
 import biuoop.DrawSurface;
 
+import java.awt.Color;
+
 /**
  * Displays the games' score.
  */
 public class ScoreIndicator implements Sprite {
-    private static final String TEXT = "Score: ";
-    private static final int FONT_SIZE = 40;
-    private static final int X = 390;
-    private static final int Y = 60;
     private final Counter scoreCounter;
+    private final Text text;
 
     /**
      * Constructs a new ScoreIndicator.
      * @param scoreCounter A Counter object representing the games' score
+     * @param text A Text object to display the game's score with
      */
-    public ScoreIndicator(Counter scoreCounter) {
+    public ScoreIndicator(Counter scoreCounter, Text text) {
         this.scoreCounter = scoreCounter;
+        this.text = text;
     }
     @Override
     public void drawOn(DrawSurface d) {
-        d.drawText(X, Y, TEXT + this.scoreCounter.getValue(), FONT_SIZE);
+        text.setText("Score: " + this.scoreCounter.getValue());
+        text.drawOn(d);
     }
 
     @Override

@@ -3,14 +3,14 @@ import biuoop.KeyboardSensor;
 
 import java.awt.Color;
 
+import java.util.List;
+
 /**
  * Holds the sprites and collidables. Responsible for animating the sprites.
  */
 public class GameLevel implements Animation {
-    public static final int NUM_OF_BLOCKS = 57;
-    private static final int NUM_OF_BALLS = 3;
     public static final double WIDTH = 800.0;
-    private static final double HEIGHT = 600.0;
+    public static final double HEIGHT = 600.0;
     public static final double BOUND_WIDTH = 20.0;
     private final SpriteCollection sprites;
     private final GameEnvironment environment;
@@ -18,17 +18,20 @@ public class GameLevel implements Animation {
     private final Counter removedBalls;
     private final Counter scoreCounter;
     private final AnimationRunner runner;
+    private final LevelInformation levelInformation;
 
     /**
      * Constructs a new Game object.
+     * @param levelInformation A LevelInformation carrying information about the new level.
      */
-    public GameLevel() {
+    public GameLevel(LevelInformation levelInformation) {
         this.sprites = new SpriteCollection();
         this.environment = new GameEnvironment();
         this.removedBlocks = new Counter(0);
         this.removedBalls = new Counter(0);
         this.scoreCounter = new Counter(0);
         this.runner = new AnimationRunner(60);
+        this.levelInformation = levelInformation;
     }
     /**
      * Adds a given collidable to the games' environment.
@@ -63,9 +66,10 @@ public class GameLevel implements Animation {
      * Creates the balls of the game.
      */
     private void createBalls() {
-        for (int i = 0; i < NUM_OF_BALLS; ++i) {
+        List<Velocity> velocities = this.levelInformation.initialBallVelocities();
+        for (int i = 0; i < this.levelInformation.numberOfBalls(); ++i) {
             Ball b = new Ball(30.0 + 40.0 * i, 300.0 - 10.0 * i, 10, Color.WHITE);
-            b.setVelocity(0.0, 3.0);
+            b.setVelocity(velocities.get(i));
             b.setGameEnvironment(this.environment);
             b.addToGame(this);
         }
@@ -73,7 +77,9 @@ public class GameLevel implements Animation {
 
     private void createPaddle() {
         KeyboardSensor keyboardSensor = runner.getKeyboardSensor();
-        Paddle paddle = new Paddle(350.0, 550.0, 100.0, 30.0, Color.YELLOW, keyboardSensor);
+        int paddleWidth = this.levelInformation.paddleWidth();
+        int pS = this.levelInformation.paddleSpeed();
+        Paddle paddle = new Paddle(350.0, 550.0, paddleWidth, 30.0, Color.YELLOW, keyboardSensor, pS);
         paddle.addToGame(this);
     }
 
@@ -86,38 +92,37 @@ public class GameLevel implements Animation {
         createBalls();
         createPaddle();
         createBlocks();
-        ScoreIndicator scoreIndicator = new ScoreIndicator(this.scoreCounter);
+        ComplexSprite infoBar = new ComplexSprite();
+        infoBar.add(new Block(BOUND_WIDTH, 0.0, WIDTH - 2 * BOUND_WIDTH, BOUND_WIDTH, Color.GRAY));
+        int x = (int) (WIDTH / 4.0);
+        int y = (int) ((BOUND_WIDTH / 5.0) * 4.0);
+        Text nameText = new Text("Level name: " + this.levelInformation.levelName(), Color.WHITE, x, y, 20);
+        infoBar.add(nameText);
+        x = 3 * x;
+        Text scoreText = new Text(null, Color.WHITE, x, y, 20);
+        ScoreIndicator scoreIndicator = new ScoreIndicator(this.scoreCounter, scoreText);
         scoreIndicator.addToGame(this);
+        infoBar.add(scoreIndicator);
+        this.addSprite(infoBar);
     }
 
     /**
      * Creates the games' background.
      */
     private void createBackground() {
-        double width = WIDTH - 2 * BOUND_WIDTH;
-        new Background(20.0, 20.0, width, HEIGHT - 2 * BOUND_WIDTH, Color.BLUE).addToGame(this);
+        this.levelInformation.getBackground().addToGame(this);
     }
 
     /**
      * Creates the games' block patterns.
      */
     private void createBlocks() {
-        Color[] colorArray = {Color.GRAY, Color.RED, Color.YELLOW, Color.BLUE, Color.PINK, Color.GREEN};
-        double blockWidth = (WIDTH - 2 * BOUND_WIDTH) / 16.0;
-        double blockHeight = (HEIGHT - 2 * BOUND_WIDTH) / 20.0;
-        double blockX = 20.0 + 4.0 * blockWidth;
         BlockRemover blockRemover = new BlockRemover(this, this.removedBlocks);
         ScoreTrackingListener scoreTrackingListener = new ScoreTrackingListener(this.scoreCounter);
-        for (int i = 0; i < colorArray.length; ++i) {
-            double y = 20.0 + 3.0 * blockHeight + i * blockHeight;
-            for (int j = 0; j < 12 - i; ++j) {
-                double x = blockX + j * blockWidth;
-                Block b = new Block(x, y, blockWidth, blockHeight, colorArray[i]);
-                b.addHitListener(blockRemover);
-                b.addHitListener(scoreTrackingListener);
-                b.addToGame(this);
-            }
-            blockX += blockWidth;
+        for (Block b:this.levelInformation.blocks()) {
+            b.addHitListener(blockRemover);
+            b.addHitListener(scoreTrackingListener);
+            b.addToGame(this);
         }
     }
 
@@ -127,7 +132,7 @@ public class GameLevel implements Animation {
     public void run() {
         this.runner.run(new CountdownAnimation(2, 3, this.sprites));
         this.runner.run(this);
-        if (this.removedBlocks.getValue() == NUM_OF_BLOCKS) {
+        if (this.removedBlocks.getValue() == this.levelInformation.numberOfBlocksToRemove()) {
             this.scoreCounter.increase(100);
         }
         this.runner.close();
@@ -161,6 +166,8 @@ public class GameLevel implements Animation {
 
     @Override
     public boolean shouldStop() {
-        return this.removedBlocks.getValue() == NUM_OF_BLOCKS || this.removedBalls.getValue() == NUM_OF_BALLS;
+        boolean levelCleared = this.removedBlocks.getValue() == this.levelInformation.numberOfBlocksToRemove();
+        boolean noBallsLeft = this.removedBalls.getValue() == this.levelInformation.numberOfBalls();
+        return levelCleared || noBallsLeft;
     }
 }

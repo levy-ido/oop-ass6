@@ -122,4 +122,13 @@ public class Ball implements Sprite {
     public void removeFromGame(GameLevel g) {
         g.removeSprite(this);
     }
+
+    /**
+     * Sets this balls' velocity to a given velocity.
+     *
+     * @param velocity A Velocity object to set this balls' velocity to
+     */
+    public void setVelocity(Velocity velocity) {
+        this.velocity = velocity;
+    }
 }

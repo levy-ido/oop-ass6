@@ -1,13 +1,17 @@
+import biuoop.DrawSurface;
+
+import java.awt.*;
 import java.util.List;
 
 /**
  * Represents a line segment between two points.
  */
-public class Line {
+public class Line implements Sprite {
     private static final double COLLINEAR = -1.0;
     private static final double NO_INTERSECTION = -2.0;
     private final Point start;
     private final Point end;
+    private Color color;
 
     /**
      * Constructs a new Line object with a given start and end points.
@@ -30,6 +34,20 @@ public class Line {
      */
     public Line(double x1, double y1, double x2, double y2) {
         this(new Point(x1, y1), new Point(x2, y2));
+    }
+
+    /**
+     * Constructs a new Line object with the specified parameters.
+     *
+     * @param x1 A double representing the x-coordinate of the start point of the new line segment
+     * @param y1 A double representing the y-coordinate of the start point of the new line segment
+     * @param x2 A double representing the x-coordinate of the end point of the new line segment
+     * @param y2 A double representing the y-coordinate of the end point of the new line segment
+     * @param color A Color object representing the new line segments's color.
+     */
+    public Line(double x1, double y1, double x2, double y2, Color color) {
+        this(x1, y1, x2, y2);
+        this.color = color;
     }
 
     /**
@@ -198,5 +216,23 @@ public class Line {
             doesLineSegmentContainP = !(p.getX() < this.minX() || p.getX() > this.maxX());
         }
         return doesInfiniteLineContainP && doesLineSegmentContainP;
+    }
+
+    @Override
+    public void drawOn(DrawSurface d) {
+        d.setColor(this.color);
+        int x1 = (int) this.start.getX();
+        int y1 = (int) this.start.getY();
+        int x2 = (int) this.end.getX();
+        int y2 = (int) this.end.getY();
+        d.drawLine(x1, y1, x2, y2);
+    }
+
+    @Override
+    public void timePassed() {
+    }
+
+    @Override
+    public void addToGame(GameLevel g) {
     }
 }
