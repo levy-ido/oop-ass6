@@ -6,13 +6,13 @@ import java.awt.Color;
 import java.util.List;
 
 /**
- * Holds the sprites and collidables. Responsible for animating the sprites.
+ * Represents a game level.
  */
 public class GameLevel implements Animation {
-    public static final double WIDTH = 800.0;
-    public static final double HEIGHT = 600.0;
-    public static final double BOUND_WIDTH = 20.0;
-    private final SpriteCollection sprites;
+    public static final int BORDER_SIZE = 20;
+    public static final int GL_WIDTH = AnimationRunner.GUI_WIDTH - 2 * BORDER_SIZE;
+    public static final int GL_HEIGHT = AnimationRunner.GUI_HEIGHT - 2 * BORDER_SIZE;
+    private final ComplexSprite sprites;
     private final GameEnvironment environment;
     private final Counter removedBlocks;
     private final Counter removedBalls;
@@ -25,7 +25,7 @@ public class GameLevel implements Animation {
      * @param levelInformation A LevelInformation carrying information about the new level.
      */
     public GameLevel(LevelInformation levelInformation) {
-        this.sprites = new SpriteCollection();
+        this.sprites = new ComplexSprite();
         this.environment = new GameEnvironment();
         this.removedBlocks = new Counter(0);
         this.removedBalls = new Counter(0);
@@ -46,7 +46,7 @@ public class GameLevel implements Animation {
      * @param s A Sprite representing the sprite to add to the games' sprites
      */
     public void addSprite(Sprite s) {
-        this.sprites.addSprite(s);
+        this.sprites.add(s);
     }
 
     /**

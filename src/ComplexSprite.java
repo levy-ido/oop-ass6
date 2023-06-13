@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Composite of sprites.
+ * A Sprite composite.
  */
 public class ComplexSprite implements Sprite {
-    private List<Sprite> sprites;
+    private final List<Sprite> sprites;
 
     /**
      * Constructs a new ComplexSprite.
@@ -17,11 +17,19 @@ public class ComplexSprite implements Sprite {
     }
 
     /**
-     * Adds a given sprite to this complex sprite's sprite list.
+     * Adds the given sprite to this complex sprite's sprite list.
      * @param s A Sprite to add to this complex sprite's sprite list
      */
     public void add(Sprite s) {
         this.sprites.add(s);
+    }
+
+    /**
+     * Returns this complex sprite's sprite list.
+     * @return A List of Sprites representing this complex sprite's sprite list
+     */
+    public List<Sprite> getSprites() {
+        return this.sprites;
     }
 
     @Override
@@ -31,6 +39,7 @@ public class ComplexSprite implements Sprite {
 
     @Override
     public void timePassed() {
+        new ArrayList<>(this.sprites).forEach(Sprite::timePassed);
     }
 
     @Override

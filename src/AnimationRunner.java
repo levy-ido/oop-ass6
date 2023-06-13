@@ -4,22 +4,23 @@ import biuoop.KeyboardSensor;
 import biuoop.Sleeper;
 
 /**
- * Instances of this class can run an instance of a class that implements the animation interface.
+ * Instances of this class can run an animation.
  */
 public class AnimationRunner {
+    public static final int GUI_WIDTH = 800;
+    public static final int GUI_HEIGHT = 600;
     private final GUI gui;
     private final int framesPerSecond;
     private final Sleeper sleeper;
 
     /**
-     * Constructs a new AnimationRunner object with the given framesPerSecond.
-     *
+     * Constructs a new AnimationRunner with the given framesPerSecond.
      * @param framesPerSecond An integer representing how many frames of the animation should the new animation runner
      *                        display per second.
      */
     public AnimationRunner(int framesPerSecond) {
-        this.gui = new GUI("", 800, 600);
-        if (framesPerSecond == 0) {
+        this.gui = new GUI("", GUI_WIDTH, GUI_HEIGHT);
+        if (framesPerSecond <= 0) {
             this.framesPerSecond = 60;
         } else {
             this.framesPerSecond = framesPerSecond;

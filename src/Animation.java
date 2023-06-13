@@ -6,7 +6,7 @@ import biuoop.DrawSurface;
 public interface Animation {
     /**
      * Draws one frame of the animation on the given draw surface.
-     * @param d A DrawSurface object.
+     * @param d A DrawSurface object
      */
     void doOneFrame(DrawSurface d);
 

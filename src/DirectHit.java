@@ -6,9 +6,10 @@ import java.util.List;
  * The first level of the game. This level features a single block you need to destroy to clear it.
  */
 public class DirectHit implements LevelInformation {
-    private static final double SIDE_LEN = 50.0;
-    private static final double X = GameLevel.WIDTH / 2.0 - SIDE_LEN / 2;
-    private static final double Y = GameLevel.HEIGHT / 3.0 - SIDE_LEN / 2;
+    private static final int SIDE_LEN = 50;
+    private static final int BLOCK_X = AnimationRunner.GUI_WIDTH / 2 - SIDE_LEN / 2;
+    private static final int BLOCK_Y = AnimationRunner.GUI_HEIGHT / 3 - SIDE_LEN / 2;
+    private static final int INIT_RADIUS = 100;
     @Override
     public int numberOfBalls() {
         return 1;
@@ -17,7 +18,7 @@ public class DirectHit implements LevelInformation {
     @Override
     public List<Velocity> initialBallVelocities() {
         List<Velocity> velocities = new ArrayList<>();
-        velocities.add(new Velocity(0.0, 3.0));
+        velocities.add(new Velocity(3.0, 3.0));
         return velocities;
     }
 
@@ -39,24 +40,29 @@ public class DirectHit implements LevelInformation {
     @Override
     public Sprite getBackground() {
         ComplexSprite background = new ComplexSprite();
-        double width = GameLevel.WIDTH - 2 * GameLevel.BOUND_WIDTH;
-        double height = GameLevel.HEIGHT - 2 * GameLevel.BOUND_WIDTH;
-        background.add(new Background(GameLevel.BOUND_WIDTH, GameLevel.BOUND_WIDTH, width, height, Color.BLACK));
-        int centerX = (int) (X + SIDE_LEN / 2);
-        int centerY = (int) (Y + SIDE_LEN / 2);
+        background.add(
+                new Background(
+                        GameLevel.BORDER_SIZE,
+                        GameLevel.BORDER_SIZE,
+                        GameLevel.GL_WIDTH,
+                        GameLevel.GL_HEIGHT,
+                        Color.BLACK)
+        );
+        int blockCenterX = BLOCK_X + SIDE_LEN / 2;
+        int blockCenterY = BLOCK_Y + SIDE_LEN / 2;
         for (int i = 0; i < 3; ++i) {
-            background.add(new Ring(centerX, centerY, 100 + 50 * i, Color.BLUE));
+            background.add(new Ring(blockCenterX, blockCenterY, INIT_RADIUS + i * SIDE_LEN, Color.BLUE));
         }
-        double x1 = GameLevel.WIDTH / 2.0;
-        background.add(new Line(x1, 0.0, x1, centerY + 200.0, Color.BLUE));
-        background.add(new Line(200.0, centerY, 600.0, centerY, Color.BLUE));
+        background.add(new Line(blockCenterX, 0, blockCenterX, blockCenterY + 2 * SIDE_LEN, Color.BLUE));
+        int x1 = blockCenterX - 2 * SIDE_LEN;
+        background.add(new Line(x1, blockCenterY, blockCenterX + 2 * SIDE_LEN, blockCenterY, Color.BLUE));
         return background;
     }
 
     @Override
     public List<Block> blocks() {
         List<Block> blocks = new ArrayList<>();
-        blocks.add(new Block(X, Y, SIDE_LEN, SIDE_LEN, Color.RED));
+        blocks.add(new Block(BLOCK_X, BLOCK_Y, SIDE_LEN, SIDE_LEN, Color.RED));
         return blocks;
     }
 
