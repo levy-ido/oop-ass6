@@ -89,7 +89,7 @@ public class GameLevel implements Animation {
      */
     private ComplexSprite createInfoBar() {
         ComplexSprite infoBar = new ComplexSprite();
-        infoBar.add(new Background(20, 0, 760, 20, Color.GRAY));
+        infoBar.add(new ColoredRectangle(20, 0, 760, 20, Color.GRAY));
         Text scoreText = new Text(null, Color.WHITE, 150, 16, 20);
         ScoreIndicator scoreIndicator = new ScoreIndicator(this.scoreCounter, scoreText);
         scoreIndicator.addToGame(this);

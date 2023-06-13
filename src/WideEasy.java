@@ -39,7 +39,7 @@ public class WideEasy implements LevelInformation {
     @Override
     public Sprite getBackground() {
         ComplexSprite background = new ComplexSprite();
-        background.add(new Background(20, 20, 760, 560, Color.WHITE));
+        background.add(new ColoredRectangle(20, 20, 760, 560, Color.WHITE));
         List<Color> colors = new ArrayList<>();
         colors.add(Color.decode("#EFE7B0"));
         for (int i = 0; i < 80; ++i) {

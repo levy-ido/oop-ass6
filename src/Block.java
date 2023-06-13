@@ -7,43 +7,29 @@ import java.util.List;
 /**
  * Represents a block.
  */
-public class Block implements Collidable, Sprite, HitNotifier {
-    private final Rectangle outline;
-    private final Color color;
+public class Block extends ColoredRectangle implements Collidable, HitNotifier {
     private final List<HitListener> hitListeners;
 
     /**
-     * Constructs a new Block object with the given outline and color.
-     *
-     * @param outline A Rectangle object representing the new blocks' outline
-     * @param color A Color object representing the new blocks' color
-     */
-    public Block(Rectangle outline, Color color) {
-        this.outline = outline;
-        this.color = color;
-        this.hitListeners = new ArrayList<>();
-    }
-
-    /**
-     * Constructs a new Block object with the given parameters.
-     *
-     * @param x      A double representing the blocks' outline upper left corner x-coordinate
-     * @param y      A double representing the blocks' outline upper left corner y-coordinate
-     * @param width  A double representing the blocks' outline width
-     * @param height A double representing the blocks' outline height
-     * @param color A Color object representing the blocks' color
+     * Constructs a new Block with the given parameters.
+     * @param x      A double representing the block's upper left corner x-coordinate
+     * @param y      A double representing the block's upper left corner y-coordinate
+     * @param width  A double representing the block's width
+     * @param height A double representing the block's height
+     * @param color A Color representing the blocks' color
      */
     public Block(double x, double y, double width, double height, Color color) {
-        this(new Rectangle(x, y, width, height), color);
+        super(x, y, width, height, color);
+        this.hitListeners = new ArrayList<>();
     }
 
     @Override
     public Rectangle getCollisionRectangle() {
-        return this.outline;
+        return super.getOutline();
     }
     @Override
     public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
-        Line[] sides = this.outline.getSides();
+        Line[] sides = super.getSides();
         double dx = currentVelocity.getDx();
         if (sides[0].contains(collisionPoint) || sides[2].contains(collisionPoint)) {
             dx = -dx;
@@ -57,13 +43,13 @@ public class Block implements Collidable, Sprite, HitNotifier {
     }
     @Override
     public void drawOn(DrawSurface d) {
-        int x = (int) this.outline.getUpperLeft().getX();
-        int y = (int) this.outline.getUpperLeft().getY();
-        int width = (int) this.outline.getWidth();
-        int height = (int) this.outline.getHeight();
-        d.setColor(color);
-        d.fillRectangle(x, y, width, height);
+        super.drawOn(d);
         d.setColor(Color.BLACK);
+        Point upperLeft = super.getUpperLeft();
+        int x = (int) upperLeft.getX();
+        int y = (int) upperLeft.getY();
+        int width = (int) super.getWidth();
+        int height = (int) super.getHeight();
         d.drawRectangle(x, y, width, height);
     }
 
@@ -78,8 +64,8 @@ public class Block implements Collidable, Sprite, HitNotifier {
     }
 
     /**
-     * Removes this block from the given game.
-     * @param gameLevel A Game object to remove this block from
+     * Removes this block from the given game level.
+     * @param gameLevel A GameLevel to remove this block from
      */
     public void removeFromGame(GameLevel gameLevel) {
         gameLevel.removeCollidable(this);
@@ -97,12 +83,10 @@ public class Block implements Collidable, Sprite, HitNotifier {
     }
 
     /**
-     * Notifies all of this blocks' hit listeners the given ball hit this block.
-     * @param hitter A Ball object representing the ball that hit this block
+     * Notifies all of this block's hit listeners the given ball hit this block.
+     * @param hitter A Ball representing the ball that hit this block
      */
     private void notifyHit(Ball hitter) {
-        for (HitListener hl : this.hitListeners) {
-            hl.hitEvent(this, hitter);
-        }
+        this.hitListeners.forEach(hl -> hl.hitEvent(this, hitter));
     }
 }

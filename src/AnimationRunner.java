@@ -7,17 +7,15 @@ import biuoop.Sleeper;
  * Instances of this class can run an animation.
  */
 public class AnimationRunner {
+    private static final Sleeper SLEEPER = new Sleeper();
+    private static final int FPS = 60;
     private final GUI gui;
-    private final int framesPerSecond;
-    private final Sleeper sleeper;
 
     /**
-     * Constructs a new AnimationRunner with the given framesPerSecond.
+     * Constructs a new AnimationRunner.
      */
     public AnimationRunner() {
         this.gui = new GUI("", 800, 600);
-        this.framesPerSecond = 60;
-        this.sleeper = new Sleeper();
     }
 
     /**
@@ -25,7 +23,7 @@ public class AnimationRunner {
      * @param animation An Animation object to run
      */
     public void run(Animation animation) {
-        int millisecondsPerFrame = 1000 / this.framesPerSecond;
+        int millisecondsPerFrame = 1000 / FPS;
         while (!animation.shouldStop()) {
             long startTime = System.currentTimeMillis();
             DrawSurface d = this.gui.getDrawSurface();
@@ -34,7 +32,7 @@ public class AnimationRunner {
             long usedTime = System.currentTimeMillis() - startTime;
             long milliSecondLeftToSleep = millisecondsPerFrame - usedTime;
             if (milliSecondLeftToSleep > 0) {
-                this.sleeper.sleepFor(milliSecondLeftToSleep);
+                SLEEPER.sleepFor(milliSecondLeftToSleep);
             }
         }
     }

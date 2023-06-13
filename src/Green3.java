@@ -41,14 +41,14 @@ public class Green3 implements LevelInformation {
      */
     private ComplexSprite createBuilding() {
         ComplexSprite building = new ComplexSprite();
-        building.add(new Background(80, 400, 90, 180, Color.WHITE));
+        building.add(new ColoredRectangle(80, 400, 90, 180, Color.WHITE));
         Color kindOfBlack = Color.decode("#3E3A39");
-        building.add(new Background(80, 400, 7, 180, kindOfBlack));
-        building.add(new Background(87, 400, 76, 7, kindOfBlack));
-        building.add(new Background(163, 400, 7, 180, kindOfBlack));
+        building.add(new ColoredRectangle(80, 400, 7, 180, kindOfBlack));
+        building.add(new ColoredRectangle(87, 400, 76, 7, kindOfBlack));
+        building.add(new ColoredRectangle(163, 400, 7, 180, kindOfBlack));
         for (int i = 1; i <= 4; ++i) {
-            building.add(new Background(80 + 18 * i, 400, 4, 280, kindOfBlack));
-            building.add(new Background(80, 400 + 56 * i, 90, 3, kindOfBlack));
+            building.add(new ColoredRectangle(80 + 18 * i, 400, 4, 280, kindOfBlack));
+            building.add(new ColoredRectangle(80, 400 + 56 * i, 90, 3, kindOfBlack));
         }
         return building;
     }
@@ -59,8 +59,8 @@ public class Green3 implements LevelInformation {
      */
     private ComplexSprite createAntenna() {
         ComplexSprite antenna = new ComplexSprite();
-        antenna.add(new Background(110, 340, 30, 60, Color.decode("#3E3A39")));
-        antenna.add(new Background(124, 220, 2, 120, Color.decode("#4E4A49")));
+        antenna.add(new ColoredRectangle(110, 340, 30, 60, Color.decode("#3E3A39")));
+        antenna.add(new ColoredRectangle(124, 220, 2, 120, Color.decode("#4E4A49")));
         Color[] colors = {Color.decode("#D8AC66"), Color.decode("#F64D36"), Color.WHITE};
         for (int i = 0; i < 3; ++i) {
             antenna.add(new Circle(new Ring(125, 205, 15 - 5 * i, colors[i])));
@@ -72,7 +72,7 @@ public class Green3 implements LevelInformation {
     public Sprite getBackground() {
         ComplexSprite background = new ComplexSprite();
         Color bgColor = Color.decode("#2A8215");
-        background.add(new Background(20, 20, 760, 560, bgColor));
+        background.add(new ColoredRectangle(20, 20, 760, 560, bgColor));
         background.add(createBuilding());
         background.add(createAntenna());
         return background;

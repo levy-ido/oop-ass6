@@ -36,7 +36,7 @@ public class DirectHit implements LevelInformation {
     @Override
     public Sprite getBackground() {
         ComplexSprite background = new ComplexSprite();
-        background.add(new Background(20, 20, 760, 560, Color.BLACK));
+        background.add(new ColoredRectangle(20, 20, 760, 560, Color.BLACK));
         for (int i = 0; i < 3; ++i) {
             background.add(new Ring(400, 200, 100 + 50 * i, Color.BLUE));
         }

@@ -4,56 +4,42 @@ import biuoop.KeyboardSensor;
 import java.awt.Color;
 
 /**
- * Represents a keyboard controlled paddle.
+ * A keyboard controlled paddle.
  */
-public class Paddle implements Sprite, Collidable {
-    private final Rectangle outline;
-    private final Color color;
+public class Paddle extends ColoredRectangle implements Sprite, Collidable {
     private final biuoop.KeyboardSensor keyboard;
     private final int speed;
 
     /**
-     * Constructs a new paddle with the given outline and color.
-     * @param outline A Rectangle object representing this paddles' outline
-     * @param color A Color object representing this paddles' color
-     * @param keyboard A KeyboardSensor object essential for moving the paddle
+     * Constructs a new paddle with the given parameters.
+     * @param x A double representing the paddle's upper left corner x-coordinate
+     * @param y A double representing the paddle's upper left corner y-coordinate
+     * @param width A double representing the paddle's width
+     * @param height A double representing the paddle's height
+     * @param color A Color representing the paddle's color
+     * @param kS A KeyboardSensor essential for moving the paddle
      * @param speed An integer representing the paddle's speed
      */
-    public Paddle(Rectangle outline, Color color, KeyboardSensor keyboard, int speed) {
-        this.outline = outline;
-        this.color = color;
-        this.keyboard = keyboard;
+    public Paddle(double x, double y, double width, double height, Color color, KeyboardSensor kS, int speed) {
+        super(x, y, width, height, color);
+        this.keyboard = kS;
         this.speed = speed;
     }
 
     /**
-     * Constructs a new paddle with the given parameters.
-     * @param x A double representing the paddles' outline upper left corner x-coordinate
-     * @param y A double representing the paddles' outline upper left corner y-coordinate
-     * @param width A double representing the paddles' outline width
-     * @param height A double representing the paddles' outline height
-     * @param color A Color object representing the paddles' color
-     * @param kS A KeyboardSensor object essential for moving the paddle
-     * @param speed An integer representing the paddle's speed
-     */
-    public Paddle(double x, double y, double width, double height, Color color, KeyboardSensor kS, int speed) {
-        this(new Rectangle(x, y, width, height), color, kS, speed);
-    }
-
-    /**
      * Moves this paddle the specified distance horizontally.
-     * @param moveLen A double representing the distance to move the paddle by
+     * @param moveLen A double representing the distance to move this paddle by
      */
     private void move(double moveLen) {
-        Point upperLeft = this.outline.getUpperLeft();
-        this.outline.setUpperLeft(new Point(upperLeft.getX() + moveLen, upperLeft.getY()));
+        Point upperLeft = super.getUpperLeft();
+        super.setUpperLeft(new Point(upperLeft.getX() + moveLen, upperLeft.getY()));
     }
 
     /**
      * Moves the paddle to the left.
      */
     public void moveLeft() {
-        if (this.outline.getUpperLeft().getX() > 20) {
+        if (super.getUpperLeft().getX() > 20) {
             this.move(-this.speed);
         }
     }
@@ -62,7 +48,7 @@ public class Paddle implements Sprite, Collidable {
      * Moves the paddle to the right.
      */
     public void moveRight() {
-        if (this.outline.getUpperLeft().getX() + this.outline.getWidth() < 780) {
+        if (super.getUpperLeft().getX() + super.getWidth() < 780) {
             this.move(this.speed);
         }
     }
@@ -77,22 +63,22 @@ public class Paddle implements Sprite, Collidable {
     }
     @Override
     public void drawOn(DrawSurface d) {
-        new Block(this.outline, this.color).drawOn(d);
+        super.drawOn(d);
     }
 
     @Override
     public Rectangle getCollisionRectangle() {
-        return this.outline;
+        return super.getOutline();
     }
 
     /**
-     * Divides this paddles' top side into 5 equally long segments.
-     * @return A Line array representing this paddles' top side divided into 5 equally long segments.
+     * Divides this paddle's top side into 5 equally long segments.
+     * @return A Line array representing this paddle's top side divided into 5 equally long segments.
      */
     private Line[] segment() {
-        Point upperLeft = this.outline.getUpperLeft();
+        Point upperLeft = super.getUpperLeft();
         Line[] segments = new Line[5];
-        double segmentLength = this.outline.getWidth() / 5;
+        double segmentLength = super.getWidth() / 5;
         for (int i = 0; i < 5; ++i) {
             double segmentStartX = upperLeft.getX() + i * segmentLength;
             Point segmentStart = new Point(segmentStartX, upperLeft.getY());
@@ -114,7 +100,9 @@ public class Paddle implements Sprite, Collidable {
                 return Velocity.fromAngleAndSpeed(-60.0 + i * 30.0, currentVelocity.speed());
             }
         }
-        return new Block(this.outline, this.color).hit(hitter, collisionPoint, currentVelocity);
+        Point upperLeft = super.getUpperLeft();
+        Block b = new Block(upperLeft.getX(), upperLeft.getY(), super.getWidth(), super.getHeight(), super.getColor());
+        return b.hit(hitter, collisionPoint, currentVelocity);
     }
     @Override
     public void addToGame(GameLevel g) {
