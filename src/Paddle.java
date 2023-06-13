@@ -6,7 +6,7 @@ import java.awt.Color;
 /**
  * A keyboard controlled paddle.
  */
-public class Paddle extends ColoredRectangle implements Sprite, Collidable {
+public class Paddle extends ColoredRectangle implements Collidable {
     private final biuoop.KeyboardSensor keyboard;
     private final int speed;
 

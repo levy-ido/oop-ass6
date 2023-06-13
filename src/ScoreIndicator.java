@@ -28,6 +28,5 @@ public class ScoreIndicator implements Sprite {
 
     @Override
     public void addToGame(GameLevel g) {
-        g.addSprite(this);
     }
 }
