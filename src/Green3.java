@@ -7,6 +7,8 @@ import java.util.List;
  * decoration.
  */
 public class Green3 implements LevelInformation {
+    private static final int INIT_LIGHT_RAD = 12;
+    private static final int D = 5;
     @Override
     public int numberOfBalls() {
         return 2;
@@ -62,6 +64,32 @@ public class Green3 implements LevelInformation {
         return building;
     }
 
+    /**
+     * Creates an antenna.
+     * @return A ComplexSprite that looks like an antenna
+     */
+    private ComplexSprite createAntenna() {
+        ComplexSprite antenna = new ComplexSprite();
+        double buildingX = AnimationRunner.GUI_WIDTH / 10.0;
+        double buildingWidth = AnimationRunner.GUI_WIDTH / 9.0;
+        double antennaHolderWidth = buildingWidth / 3.0;
+        double x = buildingX + buildingWidth / 2.0 - antennaHolderWidth / 2.0;
+        double buildingY = (8.5 / 12.0) * AnimationRunner.GUI_HEIGHT;
+        double y = buildingY - buildingX;
+        antenna.add(new Background(x, y, antennaHolderWidth, buildingX, Color.decode("#3E3A39")));
+        double antennaWidth = antennaHolderWidth / 14.0;
+        x = x + antennaHolderWidth / 2.0 - antennaWidth / 2.0;
+        double antennaHeight = AnimationRunner.GUI_HEIGHT / 4.0;
+        y = y - antennaHeight;
+        antenna.add(new Background(x, y, antennaWidth, antennaHeight, Color.decode("#4E4A49")));
+        Color[] colors = {Color.decode("#D8AC66"), Color.decode("#F64D36"), Color.WHITE};
+        for (int i = 0; i < 3; ++i) {
+            int x1 = (int) (x + antennaWidth / 2.0);
+            antenna.add(new Circle(new Ring(x1, (int) (y - INIT_LIGHT_RAD), INIT_LIGHT_RAD - D * i, colors[i])));
+        }
+        return antenna;
+    }
+
     @Override
     public Sprite getBackground() {
         ComplexSprite background = new ComplexSprite();
@@ -74,21 +102,8 @@ public class Green3 implements LevelInformation {
                         GameLevel.GL_HEIGHT,
                         bgColor)
                 );
-        double newWidth = width / 3.0;
-        x = x + width / 2.0 - newWidth / 2.0;
-        height = 80.0;
-        y = y - height;
-        background.add(new Block(x, y, newWidth, height, Color.decode("#3E3A39")));
-        double newerWidth = width / 14.0;
-        x = x + newWidth / 2.0 - newerWidth / 2.0;
-        height = 150.0;
-        y = y - height;
-        background.add(new Block(x, y, newerWidth, height, Color.decode("#4E4A49")));
-        Color[] colors = {Color.decode("#D8AC66"), Color.decode("#F64D36"), Color.WHITE};
-        for (int i = 0; i < 3; ++i) {
-            int x1 = (int) (x + newerWidth / 2.0);
-            background.add(new Circle(new Ring(x1, (int) (y - 12), 12 - 5 * i, colors[i])));
-        }
+        background.add(createBuilding());
+        background.add(createAntenna());
         return background;
     }
 
@@ -96,11 +111,11 @@ public class Green3 implements LevelInformation {
     public List<Block> blocks() {
         List<Block> blocks = new ArrayList<>();
         Color[] colorArray = {Color.GRAY, Color.RED, Color.YELLOW, Color.BLUE, Color.WHITE};
-        double blockX = GameLevel.WIDTH / 3.0;
-        double blockWidth = ((2.0 / 3.0) * GameLevel.WIDTH - GameLevel.BOUND_WIDTH) / 10.0;
-        double blockHeight = 560.0 / 20.0;
+        double blockX = AnimationRunner.GUI_WIDTH / 3.0;
+        double blockWidth = ((2.0 / 3.0) * AnimationRunner.GUI_WIDTH - GameLevel.BORDER_SIZE) / 10.0;
+        double blockHeight = GameLevel.GL_HEIGHT / 20.0;
         for (int i = 0; i < colorArray.length; ++i) {
-            double y = 20.0 + 3.0 * blockHeight + i * blockHeight;
+            double y = GameLevel.BORDER_SIZE + 3.0 * blockHeight + i * blockHeight;
             for (int j = 0; j < 10 - i; ++j) {
                 double x = blockX + j * blockWidth;
                 blocks.add(new Block(x, y, blockWidth, blockHeight, colorArray[i]));
@@ -112,6 +127,6 @@ public class Green3 implements LevelInformation {
 
     @Override
     public int numberOfBlocksToRemove() {
-        return 41;
+        return 40;
     }
 }
