@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.util.List;
 
 /**
- * Represents a game level.
+ * A game level.
  */
 public class GameLevel implements Animation {
     private final ComplexSprite sprites;
@@ -18,7 +18,7 @@ public class GameLevel implements Animation {
     private final LevelInformation levelInformation;
 
     /**
-     * Constructs a new GameLevel object.
+     * Constructs a new GameLevel.
      * @param levelInformation A LevelInformation carrying information about the new level.
      */
     public GameLevel(LevelInformation levelInformation) {
@@ -31,23 +31,23 @@ public class GameLevel implements Animation {
         this.levelInformation = levelInformation;
     }
     /**
-     * Adds a given collidable to the levels' environment.
-     * @param c A Collidable to add to the levels' environment
+     * Adds a given collidable to this level's environment.
+     * @param c A Collidable to add to this level's environment
      */
     public void addCollidable(Collidable c) {
         this.environment.addCollidable(c);
     }
 
     /**
-     * Adds a given sprite to the levels' sprites.
-     * @param s A Sprite to add to the levels' sprites
+     * Adds a given sprite to this level's sprites.
+     * @param s A Sprite to add to this level's sprites
      */
     public void addSprite(Sprite s) {
         this.sprites.add(s);
     }
 
     /**
-     * Creates the borders of the game.
+     * Creates this level's borders.
      */
     private void createBorders() {
         new Block(0, 0, 20, 600, Color.GRAY).addToGame(this);
@@ -59,7 +59,7 @@ public class GameLevel implements Animation {
     }
 
     /**
-     * Creates the level's balls.
+     * Creates this level's balls.
      */
     private void createBalls() {
         List<Velocity> velocities = this.levelInformation.initialBallVelocities();
@@ -72,7 +72,7 @@ public class GameLevel implements Animation {
     }
 
     /**
-     * Creates the game's paddle.
+     * Creates this level's paddle.
      */
     private void createPaddle() {
         KeyboardSensor keyboardSensor = this.runner.getKeyboardSensor();
@@ -84,8 +84,8 @@ public class GameLevel implements Animation {
     }
 
     /**
-     * Creates the game's info bar.
-     * @return A ComplexSprite that will serve as the game's info bar.
+     * Creates this level's info bar.
+     * @return A ComplexSprite that will serve as the level's info bar.
      */
     private ComplexSprite createInfoBar() {
         ComplexSprite infoBar = new ComplexSprite();
@@ -113,7 +113,7 @@ public class GameLevel implements Animation {
     }
 
     /**
-     * Creates the level's background.
+     * Creates this level's background.
      */
     private void createBackground() {
         this.levelInformation.getBackground().addToGame(this);
@@ -133,7 +133,7 @@ public class GameLevel implements Animation {
     }
 
     /**
-     * Animates the game.
+     * Animates this game level.
      */
     public void run() {
         this.runner.run(new CountdownAnimation(2, 3, this.sprites));
@@ -145,16 +145,16 @@ public class GameLevel implements Animation {
     }
 
     /**
-     * Removes the given collidable from this levels' game environment.
-     * @param c A Collidable to be removed from this levels' game environment
+     * Removes the given collidable from this level's environment.
+     * @param c A Collidable to be removed from this level's environment
      */
     public void removeCollidable(Collidable c) {
         this.environment.getCollidables().remove(c);
     }
 
     /**
-     * Removes the given sprite from this games' complex sprite's sprite list.
-     * @param s A Sprite to be removed from this games' complex sprite's sprite list
+     * Removes the given sprite from this level's sprites.
+     * @param s A Sprite to be removed from this level's sprites
      */
     public void removeSprite(Sprite s) {
         this.sprites.getSprites().remove(s);

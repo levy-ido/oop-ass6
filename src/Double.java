@@ -3,15 +3,12 @@
  * within a certain tolerance.
  */
 public class Double {
-    /**
-     * The tolerance value used to determine if two double values are equal.
-     */
+    // The tolerance value used to determine if two double values are equal
     private static final double TOLERANCE = 1E-5;
 
     /**
      * Returns true if the absolute difference between the two specified double
      * values is less than the tolerance value.
-     *
      * @param a The first double value to compare
      * @param b The second double value to compare
      * @return true if the absolute difference between a and b is less than the tolerance value, false otherwise

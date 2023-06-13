@@ -7,9 +7,8 @@ public class CollisionInfo {
 
     /**
      * Constructs a new CollisionInfo object with the given collision point and collidable.
-     *
-     * @param collisionPoint A Point object representing the point of collision
-     * @param collidedWith   A Collidable representing the object the collision occurred with
+     * @param collisionPoint A Point representing the point of collision
+     * @param collidedWith   A Collidable the object the collision occurred with
      */
     public CollisionInfo(Point collisionPoint, Collidable collidedWith) {
         this.collisionPoint = collisionPoint;
@@ -18,8 +17,7 @@ public class CollisionInfo {
 
     /**
      * Returns the point of collision.
-     *
-     * @return A Point object representing the point of collision
+     * @return A Point representing the point of collision
      */
     public Point collisionPoint() {
         return this.collisionPoint;
@@ -27,7 +25,6 @@ public class CollisionInfo {
 
     /**
      * Returns the collidable involved in the collision.
-     *
      * @return A Collidable representing the collidable involved in the collision
      */
     public Collidable collisionObject() {
