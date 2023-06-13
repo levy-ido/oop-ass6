@@ -1,13 +1,12 @@
 /**
- * Represents a point in a two-dimensional coordinate system.
+ * A point in a two-dimensional coordinate system.
  */
 public class Point {
     private final double x;
     private final double y;
 
     /**
-     * Constructs a new Point object with the given x and y coordinates.
-     *
+     * Constructs a new Point with the given x and y coordinates.
      * @param x A double representing the x-coordinate of the new point
      * @param y A double representing the y-coordinate of the new point
      */
@@ -18,8 +17,7 @@ public class Point {
 
     /**
      * Calculates the distance between this point and a given other point.
-     *
-     * @param other A Point object representing the point to calculate the distance to
+     * @param other A Point representing the point to calculate the distance to
      * @return A double representing the distance from this point to the other point
      */
     public double distance(Point other) {

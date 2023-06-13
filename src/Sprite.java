@@ -1,23 +1,23 @@
 import biuoop.DrawSurface;
 
 /**
- * Represents a "living" game object.
+ * A "living" game object.
  */
 public interface Sprite {
     /**
-     * Draws the sprite on the given draw surface.
-     * @param d A DrawSurface object used in drawing the sprite
+     * Draws this sprite on the given draw surface.
+     * @param d A DrawSurface used in drawing this sprite
      */
     void drawOn(DrawSurface d);
 
     /**
-     * This method is responsible for bringing the sprite to life.
+     * This method is responsible for bringing this sprite to life.
      */
     void timePassed();
 
     /**
-     * Adds this sprite to the given game.
-     * @param g A Game object representing a game
+     * Adds this sprite to the given game level.
+     * @param g A GameLevel
      */
     void addToGame(GameLevel g);
 }

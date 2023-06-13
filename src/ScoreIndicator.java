@@ -1,7 +1,7 @@
 import biuoop.DrawSurface;
 
 /**
- * Displays the games' score.
+ * Displays the game's score.
  */
 public class ScoreIndicator implements Sprite {
     private final Counter scoreCounter;
@@ -9,8 +9,8 @@ public class ScoreIndicator implements Sprite {
 
     /**
      * Constructs a new ScoreIndicator.
-     * @param scoreCounter A Counter object representing the games' score
-     * @param text A Text object to display the game's score with
+     * @param scoreCounter A Counter representing the game's score
+     * @param text A Text to display the game's score with
      */
     public ScoreIndicator(Counter scoreCounter, Text text) {
         this.scoreCounter = scoreCounter;

@@ -27,14 +27,14 @@ public class Ring implements Sprite {
 
     /**
      * Returns this ring's center x-coordinate.
-     * @return An integer representing this hollow circle's center x-coordinate
+     * @return An integer representing this ring's center x-coordinate
      */
     public int getX() {
         return this.x;
     }
     /**
      * Returns this ring's center y-coordinate.
-     * @return An integer representing this hollow circle's center y-coordinate
+     * @return An integer representing this ring's center y-coordinate
      */
     public int getY() {
         return this.y;
@@ -48,7 +48,7 @@ public class Ring implements Sprite {
 
     /**
      * Returns this ring's radius.
-     * @return An integer representing this hollow circle's radius
+     * @return An integer representing this ring's radius
      */
     public int getRadius() {
         return this.radius;
@@ -64,7 +64,7 @@ public class Ring implements Sprite {
 
     /**
      * Returns this ring's color.
-     * @return A Color representing this hollow circle's color
+     * @return A Color representing this ring's color
      */
     public Color getColor() {
         return this.color;

@@ -3,7 +3,7 @@ import java.awt.Color;
 import biuoop.DrawSurface;
 
 /**
- * Represents a ball.
+ * A ball.
  */
 public class Ball extends FilledRing {
     private Velocity velocity;

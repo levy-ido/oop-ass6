@@ -101,7 +101,7 @@ public class GameLevel implements Animation {
     }
 
     /**
-     * Initializes this game level.
+     * Initializes this level.
      */
     public void initialize() {
         createBackground();
@@ -133,7 +133,7 @@ public class GameLevel implements Animation {
     }
 
     /**
-     * Animates this game level.
+     * Animates this level.
      */
     public void run() {
         this.runner.run(new CountdownAnimation(2, 3, this.sprites));

@@ -1,10 +1,10 @@
 import biuoop.DrawSurface;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 /**
- * Represents a line segment between two points.
+ * A line segment.
  */
 public class Line implements Sprite {
     private static final double COLLINEAR = -1.0;
@@ -14,10 +14,9 @@ public class Line implements Sprite {
     private Color color;
 
     /**
-     * Constructs a new Line object with a given start and end points.
-     *
-     * @param start A Point object representing the start of the new line segment
-     * @param end   A Point object representing the end of the new line segment
+     * Constructs a new Line with a given start and end points.
+     * @param start A Point representing the start of the new line segment
+     * @param end   A Point representing the end of the new line segment
      */
     public Line(Point start, Point end) {
         this.start = start;
@@ -25,8 +24,7 @@ public class Line implements Sprite {
     }
 
     /**
-     * Constructs a new Line object with the specified start and end points.
-     *
+     * Constructs a new Line with the specified coordinates.
      * @param x1 A double representing the x-coordinate of the start point of the new line segment
      * @param y1 A double representing the y-coordinate of the start point of the new line segment
      * @param x2 A double representing the x-coordinate of the end point of the new line segment
@@ -37,13 +35,13 @@ public class Line implements Sprite {
     }
 
     /**
-     * Constructs a new Line object with the specified parameters.
+     * Constructs a new Line with the specified parameters.
      *
      * @param x1 A double representing the x-coordinate of the start point of the new line segment
      * @param y1 A double representing the y-coordinate of the start point of the new line segment
      * @param x2 A double representing the x-coordinate of the end point of the new line segment
      * @param y2 A double representing the y-coordinate of the end point of the new line segment
-     * @param color A Color object representing the new line segments's color.
+     * @param color A Color representing the new line segment's color.
      */
     public Line(double x1, double y1, double x2, double y2, Color color) {
         this(x1, y1, x2, y2);
@@ -55,8 +53,7 @@ public class Line implements Sprite {
      * the specified line segment.
      * Refer to this video for more details:
      * <a href="https://www.youtube.com/watch?v=5FkOO1Wwb8w">Line Segment Intersection</a>
-     *
-     * @param other A Line object representing the line segment to compute intersection with
+     * @param other A Line representing the line segment to compute intersection with
      * @return A double representing the value of t1 for the intersection point, or COLLINEAR if the line segments are
      * collinear, or NO_INTERSECTION if the line segments do not intersect
      */
@@ -78,9 +75,8 @@ public class Line implements Sprite {
     /**
      * An auxiliary method of intersectionWith. Returns the single point of intersection between this line segment and
      * a given line segment assuming these line segments are collinear.
-     *
-     * @param other A Line object representing the other line segment to check for intersection with
-     * @return A Point object representing the two line segments single point of intersection if it exists, otherwise
+     * @param other A Line representing the other line segment to check for intersection with
+     * @return A Point representing the two line segments single point of intersection if it exists, otherwise
      * null
      */
     private Point collinearIntersectionWith(Line other) {
@@ -106,9 +102,8 @@ public class Line implements Sprite {
 
     /**
      * Returns the point of intersection between this line segment and another line segment.
-     *
-     * @param other A Line object representing the other line segment to compute intersection point with
-     * @return A Point object representing the single point of intersection if it exists, otherwise returns null
+     * @param other A Line representing the other line segment to compute intersection point with
+     * @return A Point representing the single point of intersection if it exists, otherwise returns null
      */
     public Point intersectionWith(Line other) {
         double t1 = this.computeT1(other);
@@ -126,9 +121,8 @@ public class Line implements Sprite {
     /**
      * Returns the intersection point between this line segment and a given rectangle closest to the start of this line
      * segment.
-     *
-     * @param rect A Rectangle object representing a given rectangle
-     * @return A Point object representing the intersection point between this line segment and a given rectangle
+     * @param rect A Rectangle
+     * @return A Point representing the intersection point between this line segment and a given rectangle
      * closest to the start of this line segment if this line segment intersects the given rectangle, null otherwise
      */
     public Point closestIntersectionToStartOfLine(Rectangle rect) {
@@ -138,8 +132,8 @@ public class Line implements Sprite {
     }
 
     /**
-     * Returns this line segments' start.
-     * @return A Point object representing the starting point of this line segment
+     * Returns this line segment's start.
+     * @return A Point representing the starting point of this line segment
      */
     public Point start() {
         return this.start;
@@ -154,23 +148,23 @@ public class Line implements Sprite {
     }
 
     /**
-     * Returns this line segments' minimum y-coordinate.
-     * @return A double representing this line segments' minimum y-coordinate
+     * Returns this line segment's minimum y-coordinate.
+     * @return A double representing this line segment's minimum y-coordinate
      */
     public double minY() {
         return Math.min(this.start.getY(), this.end.getY());
     }
 
     /**
-     * Return this line segments' maximum y-coordinate.
-     * @return A double representing this line segments' maximum y-coordinate
+     * Return this line segment's maximum y-coordinate.
+     * @return A double representing this line segment's maximum y-coordinate
      */
     public double maxY() {
         return Math.max(this.start.getY(), this.end.getY());
     }
 
     /**
-     * Returns this line segments' slope.
+     * Returns this line segment's slope.
      * @return A double representing the slope of this line segment
      */
     public double slope() {
@@ -186,16 +180,16 @@ public class Line implements Sprite {
     }
 
     /**
-     * Returns this line segments' minimum x-coordinate.
-     * @return A double representing this line segments' minimum x-coordinate
+     * Returns this line segment's minimum x-coordinate.
+     * @return A double representing this line segment's minimum x-coordinate
      */
     public double minX() {
         return Math.min(this.start.getX(), this.end.getX());
     }
 
     /**
-     * Returns this line segments' maximum x-coordinate.
-     * @return A double representing this line segments' maximum x-coordinate
+     * Returns this line segment's maximum x-coordinate.
+     * @return A double representing this line segment's maximum x-coordinate
      */
     public double maxX() {
         return Math.max(this.start.getX(), this.end.getX());
@@ -203,7 +197,7 @@ public class Line implements Sprite {
 
     /**
      * Checks whether this line segment contains a given point.
-     * @param p A Point object representing the given point
+     * @param p A Point representing the given point
      * @return true if this line segment contains the given point, false otherwise
      */
     public boolean contains(Point p) {

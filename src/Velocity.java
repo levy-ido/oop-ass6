@@ -1,13 +1,12 @@
 /**
- * Representing an objects' velocity.
+ * An's velocity.
  */
 public class Velocity {
     private final double dx;
     private final double dy;
 
     /**
-     * Constructs a new Velocity object with the given dx and dy values.
-     *
+     * Constructs a new Velocity with the given dx and dy values.
      * @param dx A double representing horizontal speed
      * @param dy A double representing vertical speed
      */
@@ -17,16 +16,16 @@ public class Velocity {
     }
 
     /**
-     * Returns this velocitys' dx.
-     * @return A double representing this velocitys' horizontal speed
+     * Returns this velocity's dx.
+     * @return A double representing this velocity's horizontal speed
      */
     public double getDx() {
         return this.dx;
     }
 
     /**
-     * Returns this velocitys' dy.
-     * @return A double representing this velocitys' vertical speed
+     * Returns this velocity's dy.
+     * @return A double representing this velocity's vertical speed
      */
     public double getDy() {
         return this.dy;
@@ -34,20 +33,18 @@ public class Velocity {
 
     /**
      * Applies this velocity to a point.
-     *
-     * @param point A Point object to apply this velocity to
-     * @return A new Point object representing the given points' location after applying this velocity to it
+     * @param point A Point to apply this velocity to
+     * @return A new Point representing the given point's location after applying this velocity to it
      */
     public Point applyToPoint(Point point) {
         return new Point(point.getX() + this.dx, point.getY() + this.dy);
     }
 
     /**
-     * Constructs a new Velocity object corresponding to the given angle and speed.
-     *
+     * Constructs a new Velocity corresponding to the given angle and speed.
      * @param angle A double representing an angle in degrees relative to the positive y-axis in clockwise fashion
      * @param speed A double representing speed
-     * @return A new Velocity object corresponding to the given angle and speed
+     * @return A new Velocity corresponding to the given angle and speed
      */
     public static Velocity fromAngleAndSpeed(double angle, double speed) {
         double angleInRadians = Math.toRadians(angle - 90.0);
@@ -57,8 +54,8 @@ public class Velocity {
     }
 
     /**
-     * Returns this velocitys' speed.
-     * @return A double representing this velocitys' speed
+     * Returns this velocity's speed.
+     * @return A double representing this velocity's speed
      */
     public double speed() {
         Point origin = new Point(0.0, 0.0);

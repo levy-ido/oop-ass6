@@ -6,8 +6,8 @@ import java.util.Comparator;
 public class PointComparatorByRelativeDistance implements Comparator<Point> {
     private final Point p;
     /**
-     * Constructs a new PointComparatorByRelativeDistance object with the given point.
-     * @param p A Point object representing the point to compute distance to
+     * Constructs a new PointComparatorByRelativeDistance with the given point.
+     * @param p A Point representing the point to compute distance to
      */
     public PointComparatorByRelativeDistance(Point p) {
         this.p = p;

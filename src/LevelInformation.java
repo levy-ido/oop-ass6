@@ -12,7 +12,7 @@ public interface LevelInformation {
 
     /**
      * Returns a list of the initial ball velocities of the level.
-     * @return A List of Velocity objects representing the initial ball velocities of the level.
+     * @return A List of Velocities representing the initial ball velocities of the level.
      */
     List<Velocity> initialBallVelocities();
 
@@ -42,7 +42,7 @@ public interface LevelInformation {
 
     /**
      * Returns a list of the level's blocks.
-     * @return A List of Block objects representing the level's blocks
+     * @return A List of Blocks representing the level's blocks
      */
     List<Block> blocks();
 

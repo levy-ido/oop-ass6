@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a block.
+ * A Block.
  */
 public class Block extends ColoredRectangle implements Collidable, HitNotifier {
     private final List<HitListener> hitListeners;
@@ -75,11 +75,6 @@ public class Block extends ColoredRectangle implements Collidable, HitNotifier {
     @Override
     public void addHitListener(HitListener hl) {
         this.hitListeners.add(hl);
-    }
-
-    @Override
-    public void removeHitListener(HitListener hl) {
-        this.hitListeners.remove(hl);
     }
 
     /**

@@ -2,14 +2,14 @@ import biuoop.DrawSurface;
 import biuoop.KeyboardSensor;
 
 /**
- * Represents a pause screen.
+ * A pause screen.
  */
 public class PauseScreen implements Animation {
     private final KeyboardSensor keyboard;
 
     /**
      * Constructs a new PauseScreen with the given keyboard sensor.
-     * @param k A KeyboardSensor object to construct the new pause screen with
+     * @param k A KeyboardSensor to construct the new pause screen with
      */
     public PauseScreen(KeyboardSensor k) {
         this.keyboard = k;

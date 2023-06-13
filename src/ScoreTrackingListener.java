@@ -6,7 +6,7 @@ public class ScoreTrackingListener implements HitListener {
 
     /**
      * Constructs a new ScoreTrackingListener with the given counter.
-     * @param scoreCounter A Counter object representing the games' score
+     * @param scoreCounter A Counter representing the game's score
      */
     public ScoreTrackingListener(Counter scoreCounter) {
         this.currentScore = scoreCounter;

@@ -4,7 +4,7 @@ import biuoop.Sleeper;
 import java.awt.Color;
 
 /**
- * Represents a countdown animation.
+ * A countdown animation.
  */
 public class CountdownAnimation implements Animation {
     private final ComplexSprite gameScreen;

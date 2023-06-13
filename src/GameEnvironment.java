@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents the game's environment. Holds a collection of collidables.
+ * A game level's environment. Holds a collection of collidables.
  */
 public class GameEnvironment {
     private final List<Collidable> collidables;
