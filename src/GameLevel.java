@@ -9,12 +9,6 @@ import java.util.List;
  * Represents a game level.
  */
 public class GameLevel implements Animation {
-    public static final int BORDER_SIZE = 20;
-    public static final int GL_WIDTH = AnimationRunner.GUI_WIDTH - 2 * BORDER_SIZE;
-    public static final int GL_HEIGHT = AnimationRunner.GUI_HEIGHT - 2 * BORDER_SIZE;
-    private static final int BALL_RADIUS = 10;
-    private static final int PADDLE_HEIGHT = 30;
-    private static final int PADDLE_Y = AnimationRunner.GUI_HEIGHT - BORDER_SIZE - PADDLE_HEIGHT;
     private final ComplexSprite sprites;
     private final GameEnvironment environment;
     private final Counter removedBlocks;
@@ -33,7 +27,7 @@ public class GameLevel implements Animation {
         this.removedBlocks = new Counter(0);
         this.removedBalls = new Counter(0);
         this.scoreCounter = new Counter(0);
-        this.runner = new AnimationRunner(60);
+        this.runner = new AnimationRunner();
         this.levelInformation = levelInformation;
     }
     /**
@@ -56,12 +50,10 @@ public class GameLevel implements Animation {
      * Creates the borders of the game.
      */
     private void createBorders() {
-        new Block(0.0, 0.0, BORDER_SIZE, AnimationRunner.GUI_HEIGHT, Color.GRAY).addToGame(this);
-        new Block(20.0, 0.0, GL_WIDTH, BORDER_SIZE, Color.GRAY).addToGame(this);
-        int var = AnimationRunner.GUI_WIDTH - BORDER_SIZE;
-        new Block(var, 0.0, BORDER_SIZE, AnimationRunner.GUI_HEIGHT, Color.GRAY).addToGame(this);
-        var = AnimationRunner.GUI_HEIGHT - BORDER_SIZE;
-        Block bottomBorder = new Block(BORDER_SIZE, var, GL_WIDTH, BORDER_SIZE, Color.GRAY);
+        new Block(0, 0, 20, 600, Color.GRAY).addToGame(this);
+        new Block(20, 0, 760, 20, Color.GRAY).addToGame(this);
+        new Block(780, 0, 20, 600, Color.GRAY).addToGame(this);
+        Block bottomBorder = new Block(20, 580, 760, 20, Color.GRAY);
         bottomBorder.addHitListener(new BallRemover(this, this.removedBalls));
         bottomBorder.addToGame(this);
     }
@@ -72,9 +64,7 @@ public class GameLevel implements Animation {
     private void createBalls() {
         List<Velocity> velocities = this.levelInformation.initialBallVelocities();
         for (int i = 0; i < this.levelInformation.numberOfBalls(); ++i) {
-            double x = AnimationRunner.GUI_WIDTH / 2.0;
-            double y = (2.0 / 3.0) * AnimationRunner.GUI_HEIGHT;
-            Ball b = new Ball(x, y, BALL_RADIUS, Color.WHITE);
+            Ball b = new Ball(400, 400, 10, Color.WHITE);
             b.setVelocity(velocities.get(i));
             b.setGameEnvironment(this.environment);
             b.addToGame(this);
@@ -87,9 +77,9 @@ public class GameLevel implements Animation {
     private void createPaddle() {
         KeyboardSensor keyboardSensor = this.runner.getKeyboardSensor();
         int paddleWidth = this.levelInformation.paddleWidth();
-        int pS = this.levelInformation.paddleSpeed();
-        double paddleX = AnimationRunner.GUI_WIDTH / 2.0 - paddleWidth / 2.0;
-        Paddle paddle = new Paddle(paddleX, PADDLE_Y, paddleWidth, PADDLE_HEIGHT, Color.YELLOW, keyboardSensor, pS);
+        int paddleSpeed = this.levelInformation.paddleSpeed();
+        int paddleX = 400 - paddleWidth / 2;
+        Paddle paddle = new Paddle(paddleX, 550, paddleWidth, 30, Color.YELLOW, keyboardSensor, paddleSpeed);
         paddle.addToGame(this);
     }
 
@@ -99,16 +89,13 @@ public class GameLevel implements Animation {
      */
     private ComplexSprite createInfoBar() {
         ComplexSprite infoBar = new ComplexSprite();
-        infoBar.add(new Background(BORDER_SIZE, 0.0, GL_WIDTH, BORDER_SIZE, Color.GRAY));
-        int x = AnimationRunner.GUI_WIDTH / 4;
-        int y = (int) ((4.0 / 5.0) * BORDER_SIZE);
-        int fontSize = 20;
-        Text scoreText = new Text(null, Color.WHITE, x, y, fontSize);
+        infoBar.add(new Background(20, 0, 760, 20, Color.GRAY));
+        Text scoreText = new Text(null, Color.WHITE, 150, 16, 20);
         ScoreIndicator scoreIndicator = new ScoreIndicator(this.scoreCounter, scoreText);
         scoreIndicator.addToGame(this);
         infoBar.add(scoreIndicator);
         String text = "Level Name: " + this.levelInformation.levelName();
-        Text nameText = new Text(text, Color.WHITE, 2 * x, y, fontSize);
+        Text nameText = new Text(text, Color.WHITE, 300, 16, 20);
         infoBar.add(nameText);
         return infoBar;
     }

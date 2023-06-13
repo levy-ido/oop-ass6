@@ -7,13 +7,6 @@ import java.util.List;
  * and plenty of balls.
  */
 public class WideEasy implements LevelInformation {
-    private static final int SUN_C = 150;
-    private static final int BLOCK_H = 20;
-    private static final int RAY_NUM = 80;
-    private static final int RAY_D = 9;
-    private static final int BLOCK_Y = AnimationRunner.GUI_HEIGHT / 2 - BLOCK_H;
-    private static final int SUN_RADIUS = 100;
-    private static final int SUN_D = 25;
     @Override
     public int numberOfBalls() {
         return 10;

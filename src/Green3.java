@@ -7,8 +7,6 @@ import java.util.List;
  * decoration.
  */
 public class Green3 implements LevelInformation {
-    private static final int INIT_LIGHT_RAD = 12;
-    private static final int D = 5;
     @Override
     public int numberOfBalls() {
         return 2;

@@ -1,7 +1,5 @@
 import biuoop.DrawSurface;
 
-import java.awt.Color;
-
 /**
  * Displays the games' score.
  */

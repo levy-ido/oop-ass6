@@ -25,9 +25,7 @@ public class CountdownAnimation implements Animation {
         this.count = countFrom;
         this.sleeper = new Sleeper();
         this.displayForMS = (long) ((numOfSeconds / countFrom) * 1000);
-        int x = AnimationRunner.GUI_WIDTH / 2;
-        int y = AnimationRunner.GUI_HEIGHT / 2;
-        this.text = new Text(null, Color.WHITE, x, y, 64);
+        this.text = new Text(null, Color.WHITE, 400, 300, 64);
     }
     @Override
     public void doOneFrame(DrawSurface d) {
