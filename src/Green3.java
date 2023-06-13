@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The third level of the game. It looks similar to how the game looked in previous assignments, but feature some
+ * The third level of the game. It looks similar to how the game looked in previous assignments, but features some
  * decoration.
  */
 public class Green3 implements LevelInformation {
@@ -37,27 +37,43 @@ public class Green3 implements LevelInformation {
         return "Green 3";
     }
 
+    /**
+     * Creates a building.
+     * @return A ComplexSprite that looks like a building
+     */
+    private ComplexSprite createBuilding() {
+        ComplexSprite building = new ComplexSprite();
+        double x = AnimationRunner.GUI_WIDTH / 10.0;
+        double y = (8.5 / 12.0) * AnimationRunner.GUI_HEIGHT;
+        double width = AnimationRunner.GUI_WIDTH / 9.0;
+        double height = (3.5 / 12.0) * AnimationRunner.GUI_HEIGHT;
+        building.add(new Background(x, y, width, height, Color.WHITE));
+        Color color = Color.decode("#3E3A39");
+        double outerSize = 7.0;
+        building.add(new Background(x, y, outerSize, height, color));
+        building.add(new Background(x + outerSize, y, width - 2 * outerSize, outerSize, color));
+        building.add(new Background(x + width - outerSize, y, outerSize, height, color));
+        double innerSizeV = 4.0;
+        double innerSizeH = 3.0;
+        for (int i = 1; i <= 4; ++i) {
+            building.add(new Background(x + (width / 5.0) * i, y, innerSizeV, height, color));
+            building.add(new Background(x, y + (height / 5.0) * i, width, innerSizeH, color));
+        }
+        return building;
+    }
+
     @Override
     public Sprite getBackground() {
         ComplexSprite background = new ComplexSprite();
-        double width = GameLevel.WIDTH - 2 * GameLevel.BOUND_WIDTH;
-        double height = GameLevel.HEIGHT - 2 * GameLevel.BOUND_WIDTH;
         Color bgColor = Color.decode("#2A8215");
-        background.add(new Background(GameLevel.BOUND_WIDTH, GameLevel.BOUND_WIDTH, width, height, bgColor));
-        double x = GameLevel.WIDTH / 10.0;
-        double y = (8.5 / 12.0) * GameLevel.HEIGHT;
-        width = GameLevel.WIDTH / 9.0;
-        height = (3.5 / 12.0) * GameLevel.HEIGHT;
-        background.add(new Block(x, y, width, height, Color.WHITE));
-        Color color = Color.decode("#3E3A39");
-        double borderWidth = 7.0;
-        background.add(new Block(x, y, borderWidth, height, color));
-        background.add(new Block(x + borderWidth, y, width - 2 * borderWidth, borderWidth, color));
-        background.add(new Block(x + width - borderWidth, y, borderWidth, height, color));
-        for (int i = 1; i <= 4; ++i) {
-            background.add(new Block(x + (width / 5.0) * i, y, 4.0, height, color));
-            background.add(new Block(x, y + (height / 5.0) * i, width, 3.0, color));
-        }
+        background.add(
+                new Background(
+                        GameLevel.BORDER_SIZE,
+                        GameLevel.BORDER_SIZE,
+                        GameLevel.GL_WIDTH,
+                        GameLevel.GL_HEIGHT,
+                        bgColor)
+                );
         double newWidth = width / 3.0;
         x = x + width / 2.0 - newWidth / 2.0;
         height = 80.0;
@@ -71,7 +87,7 @@ public class Green3 implements LevelInformation {
         Color[] colors = {Color.decode("#D8AC66"), Color.decode("#F64D36"), Color.WHITE};
         for (int i = 0; i < 3; ++i) {
             int x1 = (int) (x + newerWidth / 2.0);
-            background.add(new FillDecorator(new Ring(x1, (int) (y - 12), 12 - 5 * i, colors[i])));
+            background.add(new Circle(new Ring(x1, (int) (y - 12), 12 - 5 * i, colors[i])));
         }
         return background;
     }

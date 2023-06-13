@@ -7,8 +7,13 @@ import java.util.List;
  * and plenty of balls.
  */
 public class WideEasy implements LevelInformation {
-    private static final double SUN_C = 150.0;
-    private static final double BLOCK_H = 20.0;
+    private static final int SUN_C = 150;
+    private static final int BLOCK_H = 20;
+    private static final int RAY_NUM = 80;
+    private static final int RAY_D = 9;
+    private static final int BLOCK_Y = AnimationRunner.GUI_HEIGHT - BLOCK_H;
+    private static final int SUN_RADIUS = 100;
+    private static final int SUN_D = 25;
     @Override
     public int numberOfBalls() {
         return 10;
@@ -42,18 +47,22 @@ public class WideEasy implements LevelInformation {
     @Override
     public Sprite getBackground() {
         ComplexSprite background = new ComplexSprite();
-        double width = GameLevel.WIDTH - 2 * GameLevel.BOUND_WIDTH;
-        double height = GameLevel.HEIGHT - 2 * GameLevel.BOUND_WIDTH;
-        background.add(new Background(GameLevel.BOUND_WIDTH, GameLevel.BOUND_WIDTH, width, height, Color.WHITE));
+        background.add(
+                new Background(GameLevel.BORDER_SIZE,
+                        GameLevel.BORDER_SIZE,
+                        GameLevel.GL_WIDTH,
+                        GameLevel.GL_HEIGHT,
+                        Color.WHITE)
+        );
         List<Color> colors = new ArrayList<>();
         colors.add(Color.decode("#EFE7B0"));
-        for (int i = 0; i < 80; ++i) {
-            background.add(new Line(SUN_C, SUN_C, 9 * i, GameLevel.HEIGHT / 2.0 - BLOCK_H, colors.get(0)));
+        for (int i = 0; i < RAY_NUM; ++i) {
+            background.add(new Line(SUN_C, SUN_C, RAY_D * i, BLOCK_Y, colors.get(0)));
         }
         colors.add(Color.decode("#ECD749"));
         colors.add(Color.decode("#FFE118"));
         for (int i = 0; i < 3; ++i) {
-            background.add(new FillDecorator(new Ring((int) SUN_C, (int) SUN_C, 100 - 25 * i, colors.get(i))));
+            background.add(new Circle(new Ring(SUN_C, SUN_C, SUN_RADIUS - SUN_D * i, colors.get(i))));
         }
         return background;
     }
@@ -61,11 +70,11 @@ public class WideEasy implements LevelInformation {
     @Override
     public List<Block> blocks() {
         List<Block> blocks = new ArrayList<>();
-        double blockWidth = (GameLevel.WIDTH - 2 * GameLevel.BOUND_WIDTH) / 15.0;
+        double blockWidth = GameLevel.GL_WIDTH / 15.0;
         for (int i = 0; i < this.numberOfBlocksToRemove(); ++i) {
-            double x = GameLevel.BOUND_WIDTH + blockWidth * i;
+            double x = GameLevel.BORDER_SIZE + blockWidth * i;
             Color color = WideEasy.getColor(i);
-            blocks.add(new Block(x, GameLevel.HEIGHT / 2.0 - BLOCK_H, blockWidth, BLOCK_H, color));
+            blocks.add(new Block(x, BLOCK_Y, blockWidth, BLOCK_H, color));
         }
         return blocks;
     }
@@ -77,7 +86,7 @@ public class WideEasy implements LevelInformation {
 
     /**
      * Returns the color of the ith block.
-     * @param i An integer representing an block's index
+     * @param i An integer representing a block's index
      * @return A Color representing the color of the ith block
      */
     private static Color getColor(int i) {

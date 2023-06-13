@@ -7,7 +7,7 @@ public class Ass6Game {
      * @param args A String[]. Ignored
      */
     public static void main(String[] args) {
-        GameLevel gameLevel = new GameLevel(new Green3());
+        GameLevel gameLevel = new GameLevel(new DirectHit());
         gameLevel.initialize();
         gameLevel.run();
     }

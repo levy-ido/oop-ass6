@@ -3,14 +3,13 @@ import biuoop.DrawSurface;
 /**
  * Enables rings to be drawn as a circle.
  */
-public class FillDecorator implements Sprite{
+public class Circle implements Sprite {
     private final Ring r;
-
     /**
-     * Constructs a new FillDecorator.
+     * Constructs a new Circle.
      * @param r A Ring to decorate
      */
-    public FillDecorator(Ring r) {
+    public Circle(Ring r) {
         this.r = r;
     }
 

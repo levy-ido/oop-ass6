@@ -12,6 +12,9 @@ public class GameLevel implements Animation {
     public static final int BORDER_SIZE = 20;
     public static final int GL_WIDTH = AnimationRunner.GUI_WIDTH - 2 * BORDER_SIZE;
     public static final int GL_HEIGHT = AnimationRunner.GUI_HEIGHT - 2 * BORDER_SIZE;
+    private static final int BALL_RADIUS = 10;
+    private static final int PADDLE_HEIGHT = 30;
+    private static final int PADDLE_Y = AnimationRunner.GUI_HEIGHT - BORDER_SIZE - PADDLE_HEIGHT;
     private final ComplexSprite sprites;
     private final GameEnvironment environment;
     private final Counter removedBlocks;
@@ -21,7 +24,7 @@ public class GameLevel implements Animation {
     private final LevelInformation levelInformation;
 
     /**
-     * Constructs a new Game object.
+     * Constructs a new GameLevel object.
      * @param levelInformation A LevelInformation carrying information about the new level.
      */
     public GameLevel(LevelInformation levelInformation) {
@@ -34,16 +37,16 @@ public class GameLevel implements Animation {
         this.levelInformation = levelInformation;
     }
     /**
-     * Adds a given collidable to the games' environment.
-     * @param c A Collidable representing the collidable to add to the games' environment
+     * Adds a given collidable to the levels' environment.
+     * @param c A Collidable to add to the levels' environment
      */
     public void addCollidable(Collidable c) {
         this.environment.addCollidable(c);
     }
 
     /**
-     * Adds a given sprite to the games' sprites.
-     * @param s A Sprite representing the sprite to add to the games' sprites
+     * Adds a given sprite to the levels' sprites.
+     * @param s A Sprite to add to the levels' sprites
      */
     public void addSprite(Sprite s) {
         this.sprites.add(s);
@@ -53,38 +56,65 @@ public class GameLevel implements Animation {
      * Creates the borders of the game.
      */
     private void createBorders() {
-        double widthOfTopAndBot = WIDTH - 2 * BOUND_WIDTH;
-        new Block(0.0, 0.0, BOUND_WIDTH, HEIGHT, Color.GRAY).addToGame(this);
-        new Block(20.0, 0.0, widthOfTopAndBot, BOUND_WIDTH, Color.GRAY).addToGame(this);
-        new Block(WIDTH - BOUND_WIDTH, 0.0, BOUND_WIDTH, HEIGHT, Color.GRAY).addToGame(this);
-        Block bottomBorder = new Block(BOUND_WIDTH, HEIGHT - BOUND_WIDTH, widthOfTopAndBot, BOUND_WIDTH, Color.GRAY);
+        new Block(0.0, 0.0, BORDER_SIZE, AnimationRunner.GUI_HEIGHT, Color.GRAY).addToGame(this);
+        new Block(20.0, 0.0, GL_WIDTH, BORDER_SIZE, Color.GRAY).addToGame(this);
+        int var = AnimationRunner.GUI_WIDTH - BORDER_SIZE;
+        new Block(var, 0.0, BORDER_SIZE, AnimationRunner.GUI_HEIGHT, Color.GRAY).addToGame(this);
+        var = AnimationRunner.GUI_HEIGHT - BORDER_SIZE;
+        Block bottomBorder = new Block(BORDER_SIZE, var, GL_WIDTH, BORDER_SIZE, Color.GRAY);
         bottomBorder.addHitListener(new BallRemover(this, this.removedBalls));
         bottomBorder.addToGame(this);
     }
 
     /**
-     * Creates the balls of the game.
+     * Creates the level's balls.
      */
     private void createBalls() {
         List<Velocity> velocities = this.levelInformation.initialBallVelocities();
         for (int i = 0; i < this.levelInformation.numberOfBalls(); ++i) {
-            Ball b = new Ball((WIDTH / 2.0), ((2.0 / 3.0) * HEIGHT), 10, Color.WHITE);
+            double x = AnimationRunner.GUI_WIDTH / 2.0;
+            double y = (2.0 / 3.0) * AnimationRunner.GUI_HEIGHT;
+            Ball b = new Ball(x, y, BALL_RADIUS, Color.WHITE);
             b.setVelocity(velocities.get(i));
             b.setGameEnvironment(this.environment);
             b.addToGame(this);
         }
     }
 
+    /**
+     * Creates the game's paddle.
+     */
     private void createPaddle() {
-        KeyboardSensor keyboardSensor = runner.getKeyboardSensor();
+        KeyboardSensor keyboardSensor = this.runner.getKeyboardSensor();
         int paddleWidth = this.levelInformation.paddleWidth();
         int pS = this.levelInformation.paddleSpeed();
-        Paddle paddle = new Paddle(350.0, 550.0, paddleWidth, 30.0, Color.YELLOW, keyboardSensor, pS);
+        double paddleX = AnimationRunner.GUI_WIDTH / 2.0 - paddleWidth / 2.0;
+        Paddle paddle = new Paddle(paddleX, PADDLE_Y, paddleWidth, PADDLE_HEIGHT, Color.YELLOW, keyboardSensor, pS);
         paddle.addToGame(this);
     }
 
     /**
-     * Initializes this game.
+     * Creates the game's info bar.
+     * @return A ComplexSprite that will serve as the game's info bar.
+     */
+    private ComplexSprite createInfoBar() {
+        ComplexSprite infoBar = new ComplexSprite();
+        infoBar.add(new Background(BORDER_SIZE, 0.0, GL_WIDTH, BORDER_SIZE, Color.GRAY));
+        int x = AnimationRunner.GUI_WIDTH / 4;
+        int y = (int) ((4.0 / 5.0) * BORDER_SIZE);
+        int fontSize = 20;
+        Text scoreText = new Text(null, Color.WHITE, x, y, fontSize);
+        ScoreIndicator scoreIndicator = new ScoreIndicator(this.scoreCounter, scoreText);
+        scoreIndicator.addToGame(this);
+        infoBar.add(scoreIndicator);
+        String text = "Level Name: " + this.levelInformation.levelName();
+        Text nameText = new Text(text, Color.WHITE, 2 * x, y, fontSize);
+        infoBar.add(nameText);
+        return infoBar;
+    }
+
+    /**
+     * Initializes this game level.
      */
     public void initialize() {
         createBackground();
@@ -92,29 +122,18 @@ public class GameLevel implements Animation {
         createBalls();
         createPaddle();
         createBlocks();
-        ComplexSprite infoBar = new ComplexSprite();
-        infoBar.add(new Block(BOUND_WIDTH, 0.0, WIDTH - 2 * BOUND_WIDTH, BOUND_WIDTH, Color.GRAY));
-        int x = (int) (WIDTH / 4.0);
-        int y = (int) ((BOUND_WIDTH / 5.0) * 4.0);
-        Text scoreText = new Text(null, Color.WHITE, x, y, 20);
-        ScoreIndicator scoreIndicator = new ScoreIndicator(this.scoreCounter, scoreText);
-        scoreIndicator.addToGame(this);
-        infoBar.add(scoreIndicator);
-        x = 2 * x;
-        Text nameText = new Text("Level Name: " + this.levelInformation.levelName(), Color.WHITE, x, y, 20);
-        infoBar.add(nameText);
-        this.addSprite(infoBar);
+        this.addSprite(createInfoBar());
     }
 
     /**
-     * Creates the games' background.
+     * Creates the level's background.
      */
     private void createBackground() {
         this.levelInformation.getBackground().addToGame(this);
     }
 
     /**
-     * Creates the games' block patterns.
+     * Creates this levels' block patterns.
      */
     private void createBlocks() {
         BlockRemover blockRemover = new BlockRemover(this, this.removedBlocks);
@@ -139,16 +158,16 @@ public class GameLevel implements Animation {
     }
 
     /**
-     * Removes the given collidable from this games' game environment.
-     * @param c A Collidable to be removed from this games' game environment
+     * Removes the given collidable from this levels' game environment.
+     * @param c A Collidable to be removed from this levels' game environment
      */
     public void removeCollidable(Collidable c) {
         this.environment.getCollidables().remove(c);
     }
 
     /**
-     * Removes the given sprite from this games' sprite collection.
-     * @param s A Sprite to be removed from this games' sprite collection
+     * Removes the given sprite from this games' complex sprite's sprite list.
+     * @param s A Sprite to be removed from this games' complex sprite's sprite list
      */
     public void removeSprite(Sprite s) {
         this.sprites.getSprites().remove(s);
@@ -160,8 +179,8 @@ public class GameLevel implements Animation {
         if (keyboardSensor.isPressed("p")) {
             this.runner.run(new PauseScreen(keyboardSensor));
         }
-        this.sprites.drawAllOn(d);
-        this.sprites.notifyAllTimePassed();
+        this.sprites.drawOn(d);
+        this.sprites.timePassed();
     }
 
     @Override
