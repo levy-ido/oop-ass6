@@ -63,7 +63,7 @@ public class Green3 implements LevelInformation {
         antenna.add(new ColoredRectangle(124, 220, 2, 120, Color.decode("#4E4A49")));
         Color[] colors = {Color.decode("#D8AC66"), Color.decode("#F64D36"), Color.WHITE};
         for (int i = 0; i < 3; ++i) {
-            antenna.add(new Circle(new Ring(125, 205, 15 - 5 * i, colors[i])));
+            antenna.add(new FilledRing(new Ring(125, 205, 15 - 5 * i, colors[i])));
         }
         return antenna;
     }

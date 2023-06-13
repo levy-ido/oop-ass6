@@ -20,7 +20,7 @@ public class AnimationRunner {
 
     /**
      * Runs the given animation.
-     * @param animation An Animation object to run
+     * @param animation An Animation to run
      */
     public void run(Animation animation) {
         int millisecondsPerFrame = 1000 / FPS;
@@ -39,7 +39,7 @@ public class AnimationRunner {
 
     /**
      * Returns this animation runner's gui's keyboard sensor.
-     * @return A KeyboardSensor Object representing this animation runner's gui's keyboard sensor
+     * @return A KeyboardSensor representing this animation runner's gui's keyboard sensor
      */
     public KeyboardSensor getKeyboardSensor() {
         return this.gui.getKeyboardSensor();

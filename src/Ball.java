@@ -5,59 +5,35 @@ import biuoop.DrawSurface;
 /**
  * Represents a ball.
  */
-public class Ball implements Sprite {
-    private final int radius;
-    private final Color color;
-    private Point center;
+public class Ball extends FilledRing {
     private Velocity velocity;
     private GameEnvironment gameEnvironment;
 
     /**
-     * Constructs a new Ball object with the given center, radius and color.
-     *
-     * @param center A Point object representing the center of the ball
-     * @param radius An integer representing the radius of the ball
-     * @param color  A Color object representing the color of the ball
+     * Constructs a new Ball with the given center coordinates, radius and color.
+     * @param x      An integer representing the new ball's center x-coordinate
+     * @param y      An integer representing the new ball's center y-coordinate
+     * @param radius An integer representing the new ball's radius
+     * @param color  A Color representing the new ball's color
      */
-    public Ball(Point center, int radius, Color color) {
-        this.center = center;
-        this.radius = radius;
-        this.color = color;
+    public Ball(int x, int y, int radius, Color color) {
+        super(x, y, radius, color);
     }
 
     /**
-     * Constructs a new Ball object with the given center coordinates, radius and color.
+     * Returns this ball's current trajectory.
      *
-     * @param x      A double representing the x-coordinate of the balls' center
-     * @param y      A double representing the y-coordinate of the balls' center
-     * @param radius An integer representing the radius of the ball
-     * @param color  A Color object representing the color of the ball
-     */
-    public Ball(double x, double y, int radius, Color color) {
-        this(new Point(x, y), radius, color);
-    }
-
-    /**
-     * Sets this balls' velocity to a given velocity.
-     *
-     * @param dx A double representing the balls' horizontal speed
-     * @param dy A double representing the balls' vertical speed
-     */
-    public void setVelocity(double dx, double dy) {
-        this.velocity = new Velocity(dx, dy);
-    }
-
-    /**
-     * Returns this balls' current trajectory.
-     *
-     * @return A Line object representing this balls' current trajectory
+     * @return A Line representing this ball's current trajectory
      */
     public Line trajectory() {
         Vector trajectoryVector = new Vector(this.velocity.getDx(), this.velocity.getDy());
         double trajectoryAngle = trajectoryVector.angle();
-        double trajectoryEndX = this.center.getX() + Math.cos(trajectoryAngle) * this.radius;
-        double trajectoryEndY = this.center.getY() + Math.sin(trajectoryAngle) * this.radius;
-        return new Line(this.center.getX(), this.center.getY(), trajectoryEndX, trajectoryEndY);
+        int x = this.getX();
+        int y = this.getY();
+        int r = this.getRadius();
+        double trajectoryEndX = x + Math.cos(trajectoryAngle) * r;
+        double trajectoryEndY = y + Math.sin(trajectoryAngle) * r;
+        return new Line(x, y, trajectoryEndX, trajectoryEndY);
     }
 
     /**
@@ -72,43 +48,25 @@ public class Ball implements Sprite {
             Collidable collidedWith = collisionInfo.collisionObject();
             this.velocity = collidedWith.hit(this, collisionPoint, this.velocity);
         }
-        this.center = this.velocity.applyToPoint(this.center);
+        this.setCenter(this.velocity.applyToPoint(this.getCenter()));
     }
 
     /**
-     * Sets this balls' game environment to the given game environment.
+     * Sets this ball's game environment to the given game environment.
      *
-     * @param gameEnvironment A GameEnvironment object representing a given game environment
+     * @param gameEnvironment A GameEnvironment
      */
     public void setGameEnvironment(GameEnvironment gameEnvironment) {
         this.gameEnvironment = gameEnvironment;
     }
     @Override
     public void drawOn(DrawSurface d) {
-        d.setColor(this.color);
-        d.fillCircle(this.getX(), this.getY(), this.radius);
-        d.setColor(Color.BLACK);
-        d.drawCircle(this.getX(), this.getY(), this.radius);
-    }
-
-    /**
-     * Returns the x-coordinate of the balls' center.
-     * @return An integer representing the x-coordinate of the balls' center
-     */
-    public int getX() {
-        return (int) this.center.getX();
-    }
-
-    /**
-     * Returns the y-coordinate of the balls' center.
-     * @return An integer representing the y-coordinate of the balls' center
-     */
-    public int getY() {
-        return (int) this.center.getY();
+        super.drawOn(d);
+        new Ring(this.getX(), this.getY(), this.getRadius(), Color.BLACK).drawOn(d);
     }
     @Override
     public void timePassed() {
-        moveOneStep();
+        this.moveOneStep();
     }
 
     @Override
@@ -117,17 +75,17 @@ public class Ball implements Sprite {
     }
 
     /**
-     * Removes this ball from the game.
-     * @param g A Game object
+     * Removes this ball from the given game level.
+     * @param g A GameLevel
      */
     public void removeFromGame(GameLevel g) {
         g.removeSprite(this);
     }
 
     /**
-     * Sets this balls' velocity to a given velocity.
+     * Sets this ball's velocity to a given velocity.
      *
-     * @param velocity A Velocity object to set this balls' velocity to
+     * @param velocity A Velocity to set this ball's velocity to
      */
     public void setVelocity(Velocity velocity) {
         this.velocity = velocity;

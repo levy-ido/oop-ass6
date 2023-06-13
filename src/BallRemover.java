@@ -5,8 +5,8 @@ public class BallRemover extends Remover {
 
     /**
      * Constructs a new BallRemover.
-     * @param gameLevel A Game object
-     * @param removedBalls A Counter object representing the number of balls removed
+     * @param gameLevel A GameLevel
+     * @param removedBalls A Counter representing the number of balls removed
      */
     public BallRemover(GameLevel gameLevel, Counter removedBalls) {
         super(gameLevel, removedBalls);
@@ -16,8 +16,8 @@ public class BallRemover extends Remover {
         Rectangle beingHitOutline = beingHit.getCollisionRectangle();
         Rectangle bottomBorderOutline = new Rectangle(20.0, 580.0, 760.0, 20.0);
         if (beingHitOutline.equals(bottomBorderOutline)) {
-            hitter.removeFromGame(super.getGame());
-            super.getCounter().increase(1);
+            hitter.removeFromGame(this.getGame());
+            this.getCounter().increase(1);
         }
     }
 }

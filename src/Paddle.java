@@ -31,15 +31,15 @@ public class Paddle extends ColoredRectangle implements Sprite, Collidable {
      * @param moveLen A double representing the distance to move this paddle by
      */
     private void move(double moveLen) {
-        Point upperLeft = super.getUpperLeft();
-        super.setUpperLeft(new Point(upperLeft.getX() + moveLen, upperLeft.getY()));
+        Point upperLeft = this.getUpperLeft();
+        this.setUpperLeft(new Point(upperLeft.getX() + moveLen, upperLeft.getY()));
     }
 
     /**
      * Moves the paddle to the left.
      */
     public void moveLeft() {
-        if (super.getUpperLeft().getX() > 20) {
+        if (this.getUpperLeft().getX() > 20) {
             this.move(-this.speed);
         }
     }
@@ -48,7 +48,7 @@ public class Paddle extends ColoredRectangle implements Sprite, Collidable {
      * Moves the paddle to the right.
      */
     public void moveRight() {
-        if (super.getUpperLeft().getX() + super.getWidth() < 780) {
+        if (this.getUpperLeft().getX() + this.getWidth() < 780) {
             this.move(this.speed);
         }
     }
@@ -68,7 +68,7 @@ public class Paddle extends ColoredRectangle implements Sprite, Collidable {
 
     @Override
     public Rectangle getCollisionRectangle() {
-        return super.getOutline();
+        return this.getOutline();
     }
 
     /**
@@ -76,9 +76,9 @@ public class Paddle extends ColoredRectangle implements Sprite, Collidable {
      * @return A Line array representing this paddle's top side divided into 5 equally long segments.
      */
     private Line[] segment() {
-        Point upperLeft = super.getUpperLeft();
+        Point upperLeft = this.getUpperLeft();
         Line[] segments = new Line[5];
-        double segmentLength = super.getWidth() / 5;
+        double segmentLength = this.getWidth() / 5;
         for (int i = 0; i < 5; ++i) {
             double segmentStartX = upperLeft.getX() + i * segmentLength;
             Point segmentStart = new Point(segmentStartX, upperLeft.getY());
@@ -100,8 +100,8 @@ public class Paddle extends ColoredRectangle implements Sprite, Collidable {
                 return Velocity.fromAngleAndSpeed(-60.0 + i * 30.0, currentVelocity.speed());
             }
         }
-        Point upperLeft = super.getUpperLeft();
-        Block b = new Block(upperLeft.getX(), upperLeft.getY(), super.getWidth(), super.getHeight(), super.getColor());
+        Point upperLeft = this.getUpperLeft();
+        Block b = new Block(upperLeft.getX(), upperLeft.getY(), this.getWidth(), this.getHeight(), this.getColor());
         return b.hit(hitter, collisionPoint, currentVelocity);
     }
     @Override

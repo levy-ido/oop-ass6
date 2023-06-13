@@ -25,11 +25,11 @@ public class Block extends ColoredRectangle implements Collidable, HitNotifier {
 
     @Override
     public Rectangle getCollisionRectangle() {
-        return super.getOutline();
+        return this.getOutline();
     }
     @Override
     public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
-        Line[] sides = super.getSides();
+        Line[] sides = this.getSides();
         double dx = currentVelocity.getDx();
         if (sides[0].contains(collisionPoint) || sides[2].contains(collisionPoint)) {
             dx = -dx;
@@ -45,11 +45,11 @@ public class Block extends ColoredRectangle implements Collidable, HitNotifier {
     public void drawOn(DrawSurface d) {
         super.drawOn(d);
         d.setColor(Color.BLACK);
-        Point upperLeft = super.getUpperLeft();
+        Point upperLeft = this.getUpperLeft();
         int x = (int) upperLeft.getX();
         int y = (int) upperLeft.getY();
-        int width = (int) super.getWidth();
-        int height = (int) super.getHeight();
+        int width = (int) this.getWidth();
+        int height = (int) this.getHeight();
         d.drawRectangle(x, y, width, height);
     }
 

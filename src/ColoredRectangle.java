@@ -22,10 +22,10 @@ public class ColoredRectangle extends Rectangle implements Sprite {
     }
     @Override
     public void drawOn(DrawSurface d) {
-        int x = (int) super.getUpperLeft().getX();
-        int y = (int) super.getUpperLeft().getY();
-        int width = (int) super.getWidth();
-        int height = (int) super.getHeight();
+        int x = (int) this.getUpperLeft().getX();
+        int y = (int) this.getUpperLeft().getY();
+        int width = (int) this.getWidth();
+        int height = (int) this.getHeight();
         d.setColor(this.color);
         d.fillRectangle(x, y, width, height);
     }
@@ -43,7 +43,7 @@ public class ColoredRectangle extends Rectangle implements Sprite {
      * @return A Rectangle representing this colored rectangle's outline
      */
     public Rectangle getOutline() {
-        return new Rectangle(super.getUpperLeft(), super.getWidth(), super.getHeight());
+        return new Rectangle(this.getUpperLeft(), this.getWidth(), this.getHeight());
     }
 
     /**
