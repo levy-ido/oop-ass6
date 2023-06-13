@@ -20,7 +20,7 @@ public class FilledRing extends Ring {
 
     @Override
     public void drawOn(DrawSurface d) {
-        d.setColor(super.getColor());
-        d.fillCircle(super.getX(), super.getY(), super.getRadius());
+        d.setColor(this.getColor());
+        d.fillCircle((int) this.getX(), (int) this.getY(), this.getRadius());
     }
 }

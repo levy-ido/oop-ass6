@@ -63,7 +63,12 @@ public class Paddle extends ColoredRectangle implements Sprite, Collidable {
     }
     @Override
     public void drawOn(DrawSurface d) {
-        super.drawOn(d);
+        Point upperLeft = this.getUpperLeft();
+        int x = (int) upperLeft.getX();
+        int y = (int) upperLeft.getY();
+        int width = (int) this.getWidth();
+        int height = (int) this.getHeight();
+        new Block(x, y, width, height, this.getColor()).drawOn(d);
     }
 
     @Override

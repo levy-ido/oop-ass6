@@ -147,7 +147,9 @@ public class Rectangle {
 
     @Override
     public boolean equals(Object obj) {
-        Rectangle rect = (Rectangle) obj;
-        return this.upperLeft.equals(rect.upperLeft) && this.width == rect.width && this.height == rect.height;
+        if (obj instanceof Rectangle rect) {
+            return this.upperLeft.equals(rect.upperLeft) && this.width == rect.width && this.height == rect.height;
+        }
+        return false;
     }
 }

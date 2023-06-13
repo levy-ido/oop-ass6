@@ -6,19 +6,19 @@ import java.awt.Color;
  * A ring.
  */
 public class Ring implements Sprite {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private final int radius;
     private final Color color;
 
     /**
      * Constructs a new Ring with the given parameters.
-     * @param x An integer representing the new ring's center x-coordinate
-     * @param y An integer representing the new ring's center y-coordinate
+     * @param x A double representing the new ring's center x-coordinate
+     * @param y A double representing the new ring's center y-coordinate
      * @param radius An integer representing the new ring's radius
      * @param color A Color representing the new ring's color
      */
-    public Ring(int x, int y, int radius, Color color) {
+    public Ring(double x, double y, int radius, Color color) {
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -27,23 +27,23 @@ public class Ring implements Sprite {
 
     /**
      * Returns this ring's center x-coordinate.
-     * @return An integer representing this ring's center x-coordinate
+     * @return A double representing this ring's center x-coordinate
      */
-    public int getX() {
+    public double getX() {
         return this.x;
     }
     /**
      * Returns this ring's center y-coordinate.
-     * @return An integer representing this ring's center y-coordinate
+     * @return A double representing this ring's center y-coordinate
      */
-    public int getY() {
+    public double getY() {
         return this.y;
     }
 
     @Override
     public void drawOn(DrawSurface d) {
         d.setColor(this.color);
-        d.drawCircle(this.x, this.y, this.radius);
+        d.drawCircle((int) this.x, (int) this.y, this.radius);
     }
 
     /**
@@ -75,8 +75,8 @@ public class Ring implements Sprite {
      * @param p A Point to set this ring's center to
      */
     public void setCenter(Point p) {
-        this.x = (int) p.getX();
-        this.y = (int) p.getY();
+        this.x = p.getX();
+        this.y = p.getY();
     }
 
     /**

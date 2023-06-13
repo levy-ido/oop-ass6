@@ -48,7 +48,7 @@ public class WideEasy implements LevelInformation {
         colors.add(Color.decode("#ECD749"));
         colors.add(Color.decode("#FFE118"));
         for (int i = 0; i < 3; ++i) {
-            background.add(new FilledRing(new Ring(150, 150, 100 - 30 * i, colors.get(i))));
+            background.add(new FilledRing(150, 150, 100 - 30 * i, colors.get(i)));
         }
         return background;
     }

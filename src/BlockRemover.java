@@ -13,7 +13,7 @@ public class BlockRemover extends Remover {
     }
     @Override
     public void hitEvent(Block beingHit, Ball hitter) {
-        beingHit.removeFromGame(super.getGame());
-        super.getCounter().increase(1);
+        beingHit.removeFromGame(this.getGame());
+        this.getCounter().increase(1);
     }
 }

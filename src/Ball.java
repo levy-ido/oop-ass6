@@ -28,8 +28,8 @@ public class Ball extends FilledRing {
     public Line trajectory() {
         Vector trajectoryVector = new Vector(this.velocity.getDx(), this.velocity.getDy());
         double trajectoryAngle = trajectoryVector.angle();
-        int x = this.getX();
-        int y = this.getY();
+        int x = (int) this.getX();
+        int y = (int) this.getY();
         int r = this.getRadius();
         double trajectoryEndX = x + Math.cos(trajectoryAngle) * r;
         double trajectoryEndY = y + Math.sin(trajectoryAngle) * r;
