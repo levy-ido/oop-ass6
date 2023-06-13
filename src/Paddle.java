@@ -73,7 +73,7 @@ public class Paddle extends ColoredRectangle implements Collidable {
 
     @Override
     public Rectangle getCollisionRectangle() {
-        return this.getOutline();
+        return this.getThis();
     }
 
     /**

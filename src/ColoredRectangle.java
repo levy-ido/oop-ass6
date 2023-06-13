@@ -39,14 +39,6 @@ public class ColoredRectangle extends Rectangle implements Sprite {
     }
 
     /**
-     * Returns this colored rectangle's outline.
-     * @return A Rectangle representing this colored rectangle's outline
-     */
-    public Rectangle getOutline() {
-        return new Rectangle(this.getUpperLeft(), this.getWidth(), this.getHeight());
-    }
-
-    /**
      * Returns this colored rectangle's color.
      * @return A Color representing this colored rectangle's color
      */

@@ -152,4 +152,12 @@ public class Rectangle {
         }
         return false;
     }
+
+    /**
+     * Returns a reference to this rectangle.
+     * @return This Rectangle
+     */
+    public Rectangle getThis() {
+        return this;
+    }
 }

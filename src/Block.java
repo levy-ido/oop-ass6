@@ -25,7 +25,7 @@ public class Block extends ColoredRectangle implements Collidable, HitNotifier {
 
     @Override
     public Rectangle getCollisionRectangle() {
-        return this.getOutline();
+        return this.getThis();
     }
     @Override
     public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
@@ -51,10 +51,6 @@ public class Block extends ColoredRectangle implements Collidable, HitNotifier {
         int width = (int) this.getWidth();
         int height = (int) this.getHeight();
         d.drawRectangle(x, y, width, height);
-    }
-
-    @Override
-    public void timePassed() {
     }
 
     @Override
