@@ -47,12 +47,11 @@ public class Ring implements Sprite {
     }
 
     /**
-     * Draws a circle with the same center and radius as this ring on a given draw surface.
-     * @param d A DrawSurface object
+     * Returns this ring's radius.
+     * @return An integer representing this ring's radius
      */
-    public void drawCircle(DrawSurface d) {
-        d.setColor(this.color);
-        d.fillCircle(this.x, this.y, this.radius);
+    public int getRadius() {
+        return this.radius;
     }
 
     @Override

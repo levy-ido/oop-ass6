@@ -53,7 +53,7 @@ public class Paddle implements Sprite, Collidable {
      * Moves the paddle to the left.
      */
     public void moveLeft() {
-        if (this.outline.getUpperLeft().getX() > GameLevel.BORDER_SIZE) {
+        if (this.outline.getUpperLeft().getX() > 20) {
             this.move(-this.speed);
         }
     }
@@ -62,8 +62,7 @@ public class Paddle implements Sprite, Collidable {
      * Moves the paddle to the right.
      */
     public void moveRight() {
-        int rightBoundaryX = AnimationRunner.GUI_WIDTH - GameLevel.BORDER_SIZE;
-        if (this.outline.getUpperLeft().getX() + this.outline.getWidth() < rightBoundaryX) {
+        if (this.outline.getUpperLeft().getX() + this.outline.getWidth() < 780) {
             this.move(this.speed);
         }
     }
