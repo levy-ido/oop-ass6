@@ -166,7 +166,9 @@ public class GameLevel implements Animation {
     public void doOneFrame(DrawSurface d) {
         KeyboardSensor keyboardSensor = this.runner.getKeyboardSensor();
         if (keyboardSensor.isPressed("p")) {
-            this.runner.run(new PauseScreen(keyboardSensor));
+            Text text = new Text("Paused. Press space to continue.", Color.BLACK, 175, 300, 32);
+            TextDisplayingAnimation tda = new TextDisplayingAnimation(text);
+            this.runner.run(new KeyPressStoppableAnimation(KeyboardSensor.SPACE_KEY, keyboardSensor, tda));
         }
         this.sprites.drawOn(d);
         this.sprites.timePassed();

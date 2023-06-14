@@ -30,7 +30,7 @@ public class CountdownAnimation implements Animation {
     @Override
     public void doOneFrame(DrawSurface d) {
         this.gameScreen.drawOn(d);
-        this.text.setText(String.valueOf(this.count));
+        this.text.setContent(String.valueOf(this.count));
         this.text.drawOn(d);
         this.sleeper.sleepFor(this.displayForMS);
         --this.count;

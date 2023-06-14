@@ -6,23 +6,23 @@ import java.awt.Color;
  * A simple text object.
  */
 public class Text implements Sprite {
-    private String text;
-    private final Color textColor;
+    private String content;
+    private final Color color;
     private final int x;
     private final int y;
     private final int fontSize;
 
     /**
      * Constructs a new Text with the given parameters.
-     * @param text A String representing the text to display
-     * @param textColor A Color representing the text's color
+     * @param content A String representing the text to display
+     * @param color A Color representing the text's color
      * @param x An integer representing the text's upper left corner x-coordinate
      * @param y An integer representing the text's upper left corner y-coordinate
      * @param fontSize An integer specifying the text's font size
      */
-    public Text(String text, Color textColor, int x, int y, int fontSize) {
-        this.text = text;
-        this.textColor = textColor;
+    public Text(String content, Color color, int x, int y, int fontSize) {
+        this.content = content;
+        this.color = color;
         this.x = x;
         this.y = y;
         this.fontSize = fontSize;
@@ -30,8 +30,8 @@ public class Text implements Sprite {
 
     @Override
     public void drawOn(DrawSurface d) {
-        d.setColor(this.textColor);
-        d.drawText(this.x, this.y, this.text, this.fontSize);
+        d.setColor(this.color);
+        d.drawText(this.x, this.y, this.content, this.fontSize);
     }
 
     @Override
@@ -43,10 +43,10 @@ public class Text implements Sprite {
     }
 
     /**
-     * Sets this text's text to the given text.
-     * @param text A String to set this text's text to
+     * Sets this text's content to the given string.
+     * @param content A String to set this text's content to
      */
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

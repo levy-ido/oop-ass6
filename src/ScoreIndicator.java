@@ -18,7 +18,7 @@ public class ScoreIndicator implements Sprite {
     }
     @Override
     public void drawOn(DrawSurface d) {
-        text.setText("Score: " + this.scoreCounter.getValue());
+        text.setContent("Score: " + this.scoreCounter.getValue());
         text.drawOn(d);
     }
 
