@@ -16,19 +16,23 @@ public class GameLevel implements Animation {
     private final Counter scoreCounter;
     private final AnimationRunner runner;
     private final LevelInformation levelInformation;
+    private boolean isCleared;
 
     /**
      * Constructs a new GameLevel.
+     * @param score A Counter for keeping score
+     * @param ar An AnimationRunner
      * @param levelInformation A LevelInformation carrying information about the new level.
      */
-    public GameLevel(LevelInformation levelInformation) {
+    public GameLevel(Counter score, AnimationRunner ar, LevelInformation levelInformation) {
         this.sprites = new ComplexSprite();
         this.environment = new GameEnvironment();
         this.removedBlocks = new Counter(0);
         this.removedBalls = new Counter(0);
-        this.scoreCounter = new Counter(0);
-        this.runner = new AnimationRunner();
+        this.scoreCounter = score;
+        this.runner = ar;
         this.levelInformation = levelInformation;
+        this.isCleared = false;
     }
     /**
      * Adds a given collidable to this level's environment.
@@ -76,10 +80,10 @@ public class GameLevel implements Animation {
      */
     private void createPaddle() {
         KeyboardSensor keyboardSensor = this.runner.getKeyboardSensor();
-        int paddleWidth = this.levelInformation.paddleWidth();
+        int width = this.levelInformation.paddleWidth();
         int paddleSpeed = this.levelInformation.paddleSpeed();
-        int paddleX = 400 - paddleWidth / 2;
-        Paddle paddle = new Paddle(paddleX, 550, paddleWidth, 30, Color.YELLOW, keyboardSensor, paddleSpeed);
+        int paddleX = 400 - width / 2;
+        Paddle paddle = new Paddle(paddleX, 550, width, 30, Color.YELLOW, keyboardSensor, paddleSpeed);
         paddle.addToGame(this);
     }
 
@@ -138,9 +142,8 @@ public class GameLevel implements Animation {
         this.runner.run(new CountdownAnimation(2, 3, this.sprites));
         this.runner.run(this);
         if (this.removedBlocks.getValue() == this.levelInformation.numberOfBlocksToRemove()) {
-            this.scoreCounter.increase(100);
+            isCleared = true;
         }
-        this.runner.close();
     }
 
     /**
@@ -174,5 +177,13 @@ public class GameLevel implements Animation {
         boolean levelCleared = this.removedBlocks.getValue() == this.levelInformation.numberOfBlocksToRemove();
         boolean noBallsLeft = this.removedBalls.getValue() == this.levelInformation.numberOfBalls();
         return levelCleared || noBallsLeft;
+    }
+
+    /**
+     * Returns true if the player cleared this level, false otherwise.
+     * @return true if the player cleared this level, false otherwise
+     */
+    public boolean isCleared() {
+        return this.isCleared;
     }
 }

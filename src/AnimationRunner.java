@@ -13,9 +13,10 @@ public class AnimationRunner {
 
     /**
      * Constructs a new AnimationRunner.
+     * @param gui A GUI
      */
-    public AnimationRunner() {
-        this.gui = new GUI("", 800, 600);
+    public AnimationRunner(GUI gui) {
+        this.gui = gui;
     }
 
     /**
@@ -28,7 +29,7 @@ public class AnimationRunner {
             long startTime = System.currentTimeMillis();
             DrawSurface d = this.gui.getDrawSurface();
             animation.doOneFrame(d);
-            gui.show(d);
+            this.gui.show(d);
             long usedTime = System.currentTimeMillis() - startTime;
             long milliSecondLeftToSleep = millisecondsPerFrame - usedTime;
             if (milliSecondLeftToSleep > 0) {
@@ -43,12 +44,5 @@ public class AnimationRunner {
      */
     public KeyboardSensor getKeyboardSensor() {
         return this.gui.getKeyboardSensor();
-    }
-
-    /**
-     * Closes this animation runner.
-     */
-    public void close() {
-        this.gui.close();
     }
 }
