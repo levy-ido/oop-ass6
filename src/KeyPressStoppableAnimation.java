@@ -19,6 +19,9 @@ public class KeyPressStoppableAnimation implements Animation {
         this.key = key;
         this.keyboardSensor = ks;
         this.animation = anim;
+        while (shouldStop()) {
+            doNothing();
+        }
     }
     @Override
     public void doOneFrame(DrawSurface d) {
@@ -28,5 +31,11 @@ public class KeyPressStoppableAnimation implements Animation {
     @Override
     public boolean shouldStop() {
         return this.keyboardSensor.isPressed(this.key);
+    }
+
+    /**
+     * A magical mystery method.
+     */
+    private void doNothing() {
     }
 }
